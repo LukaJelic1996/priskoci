@@ -1,0 +1,1192 @@
+<!doctype html>
+<!-- Izradio: Claude Fable 5 (2026-11-07) — MOCKUP v3 u stilu "Novine", ništa nije pravo -->
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priskoči — mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papir:#f8f4ea;
+    --tinta:#17150f;
+    --crvena:#8c2f24;
+    --rub:#c9c0ab;
+    --karta:#fdfaf2;
+    --isticanje:#f1ead8;
+    --sivo:#5a5244;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Georgia,"Times New Roman",serif;background:var(--papir);color:var(--tinta);font-size:19px;line-height:1.55;}
+
+  /* traka na vrhu — samo za demo */
+  .demobar{background:var(--tinta);color:#f3eee1;padding:9px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:10;}
+  .demobar .oznaka{background:#cfa05a;color:#2b2417;font-family:Arial,sans-serif;font-weight:700;padding:3px 10px;font-size:12px;letter-spacing:.14em;}
+  .demobar button{background:transparent;color:#e8e2d2;border:1px solid #5a5244;padding:7px 14px;font-size:13px;cursor:pointer;font-family:Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;}
+  .demobar button:hover{border-color:#cfa05a;}
+  .demobar button.aktivna{background:var(--crvena);border-color:var(--crvena);color:#fff;font-weight:700;}
+
+  .ekran{display:none;max-width:960px;margin:0 auto;padding:26px 18px 80px;}
+  .ekran.aktivan{display:block;}
+
+  /* novinska glava */
+  .gornji{display:flex;justify-content:space-between;font-family:Arial,sans-serif;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--sivo);padding-bottom:8px;}
+  .dvostruka{border-top:4px double var(--tinta);}
+  .masthead{text-align:center;font-family:"Playfair Display",Georgia,serif;font-weight:800;font-size:min(7vw,9.5vh);letter-spacing:.08em;line-height:1.05;padding:.5vh 0 .4vh;}
+  .podnav{display:flex;justify-content:center;gap:2.6em;font-family:Arial,sans-serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase;border-top:1px solid var(--tinta);border-bottom:1px solid var(--tinta);padding:8px 0;}
+  .podnav a{color:var(--tinta);text-decoration:none;cursor:pointer;}
+  .podnav a:hover{color:var(--crvena);}
+  .glava-mala{text-align:center;border-top:4px double var(--tinta);border-bottom:1px solid var(--tinta);margin-bottom:18px;}
+  .glava-mala span{display:inline-block;font-family:"Playfair Display",Georgia,serif;font-weight:700;font-size:26px;letter-spacing:.1em;padding:6px 0 4px;cursor:pointer;}
+
+  h2{font-family:Georgia,serif;font-size:30px;margin:6px 0 18px;font-weight:700;border-bottom:3px double var(--tinta);padding-bottom:10px;}
+  .korak{font-family:Arial,sans-serif;color:var(--crvena);font-size:12px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:6px;font-weight:700;}
+  .korak b{color:var(--tinta);}
+
+  /* fotografije */
+  figure.novin{margin:4px auto 20px;max-width:720px;}
+  figure.novin img{width:100%;display:block;border:1px solid var(--tinta);}
+  figure.novin figcaption{font-style:italic;font-size:14px;color:var(--sivo);padding:7px 2px;border-bottom:1px solid var(--rub);}
+
+  /* gumbi */
+  .gumb{display:block;width:100%;text-align:center;background:var(--tinta);color:var(--papir);border:0;padding:16px 14px;font-family:Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;margin:12px 0;}
+  .gumb:hover{background:var(--crvena);}
+  .gumb.glina{background:var(--crvena);}
+  .gumb.glina:hover{background:var(--tinta);}
+  .gumb.tamni{background:transparent;color:var(--tinta);border:2px solid var(--tinta);}
+  .gumb.tamni:hover{color:var(--crvena);border-color:var(--crvena);background:transparent;}
+  .gumb.obrub{background:transparent;color:var(--sivo);border:1px solid #8a8272;font-weight:400;font-size:12.5px;padding:11px;letter-spacing:.14em;}
+  .gumb.obrub:hover{color:var(--crvena);border-color:var(--crvena);background:transparent;}
+  .gumb .malo{display:block;font-family:Georgia,serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:15px;font-weight:400;margin-top:5px;opacity:.85;}
+
+  .mreza{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .plocica{background:var(--karta);border:1px solid var(--tinta);padding:20px 12px;text-align:center;font-size:20px;cursor:pointer;color:var(--tinta);}
+  .plocica:hover{border-color:var(--crvena);color:var(--crvena);}
+  .plocica svg{display:block;width:44px;height:44px;margin:0 auto 10px;color:currentColor;}
+
+  .kartica{background:var(--karta);border:1px solid var(--rub);border-top:3px double var(--tinta);padding:18px 20px;margin:14px 0;}
+  .kartica h3{margin:0 0 6px;font-size:22px;}
+  .kartica .meta{font-family:Arial,sans-serif;color:var(--sivo);font-size:14.5px;letter-spacing:.02em;}
+
+  .upozorenje{background:#fdf3da;border:1px solid var(--tinta);border-left:6px solid var(--crvena);padding:18px;margin:16px 0;font-size:19px;}
+  .uspjeh{background:var(--isticanje);border:3px double var(--tinta);padding:18px;margin:16px 0;font-size:19px;}
+  .info{background:var(--isticanje);border-left:4px solid var(--tinta);padding:15px 18px;margin:16px 0;font-size:17.5px;}
+
+  input[type=text],textarea{width:100%;font-size:22px;padding:13px;border:1px solid var(--tinta);background:#fffdf6;font-family:Georgia,serif;}
+  textarea{min-height:110px;}
+
+  .cijena-red{display:flex;align-items:center;gap:14px;justify-content:center;margin:18px 0;}
+  .cijena-red button{width:68px;height:68px;font-size:36px;border:0;background:var(--tinta);color:var(--papir);cursor:pointer;font-family:Georgia,serif;}
+  .cijena-red button:hover{background:var(--crvena);}
+  .cijena-red .iznos{font-family:"Bodoni MT",Didot,Georgia,serif;font-size:54px;font-weight:700;min-width:150px;text-align:center;}
+
+  .nazad{background:none;border:0;color:var(--sivo);font-family:Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;text-decoration:none;margin-bottom:12px;padding:0;display:inline-block;}
+  .nazad:hover{color:var(--crvena);}
+  .nazad::before{content:"\2190\00a0";}
+  .link-kako{background:none;border:0;color:var(--sivo);font-family:Arial,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;cursor:pointer;padding:0;}
+  .link-kako:hover{color:var(--crvena);}
+  .malitekst{font-family:Georgia,serif;font-style:italic;font-size:15px;color:var(--sivo);}
+
+  .znacka{display:inline-block;background:var(--crvena);color:#fff;font-family:Arial,sans-serif;font-size:11.5px;font-weight:700;padding:3px 10px;letter-spacing:.16em;vertical-align:middle;text-transform:uppercase;}
+
+  /* tko sto vidi — oznake u boji (demo) */
+  .tko{display:inline-block;border:1px solid;background:transparent;font-family:Arial,sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;margin-left:6px;vertical-align:middle;}
+  .tko-svi{color:#5a5244;border-color:#8a8272;}
+  .tko-n{color:#8c2f24;border-color:#8c2f24;}
+  .tko-p{color:#1f4e79;border-color:#1f4e79;}
+  .tko-t{color:#3e5e2e;border-color:#3e5e2e;}
+  body.velika .tko{font-size:12.5px;}
+  .legenda{margin-left:auto;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.05em;color:#cfc8b6;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .legenda i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;}
+  .legenda .l-svi i{background:#8a8272;} .legenda .l-n i{background:#c0532f;} .legenda .l-p i{background:#5b89b4;} .legenda .l-t i{background:#6f9c55;}
+
+  /* oglasi: ikona + procjena trajanja + cijena */
+  .ogl-ik{width:54px;height:54px;border:1px solid var(--tinta);background:var(--isticanje);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ogl-ik svg{width:34px;height:34px;color:var(--tinta);}
+  .procjena{font-family:Georgia,serif;font-style:italic;color:var(--tinta);}
+  .cijena-oglas{font-family:"Bodoni MT",Didot,Georgia,serif;font-size:34px;font-weight:700;white-space:nowrap;margin-left:6px;}
+
+  .koraci-lista{list-style:none;padding:0;}
+  .koraci-lista li{background:var(--karta);border:1px solid var(--rub);padding:16px;margin:10px 0;font-size:19px;display:flex;gap:14px;align-items:flex-start;}
+  .koraci-lista .br{background:var(--tinta);color:var(--papir);font-family:"Bodoni MT",Georgia,serif;font-weight:700;min-width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:21px;}
+
+  .portret{width:84px;height:84px;border:1px solid var(--tinta);flex-shrink:0;filter:grayscale(1) contrast(1.05);}
+  .red{display:flex;gap:16px;align-items:center;}
+  .gumbred{display:flex;gap:12px;flex-wrap:wrap;}
+  .gumbred .gumb{flex:1;min-width:200px;font-size:14px;padding:14px;}
+
+  /* početna: cijela na jedan ekran, novinski raspored */
+  #pocetna.aktivan{display:flex;flex-direction:column;height:calc(100vh - 110px);padding:10px 18px 12px;max-width:1060px;overflow:hidden;}
+  .glavno{display:grid;grid-template-columns:1.08fr .92fr;gap:3vw;flex:1;min-height:0;padding-top:2.2vh;}
+  .glavno figure{margin:0;min-height:0;display:flex;flex-direction:column;}
+  .glavno figure img{width:100%;flex:1;min-height:0;object-fit:cover;border:1px solid var(--tinta);}
+  .glavno figcaption{font-style:italic;font-size:13.5px;color:var(--sivo);padding-top:7px;border-bottom:1px solid var(--rub);padding-bottom:7px;}
+  .kicker{font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--crvena);margin-bottom:1.4vh;}
+  .naslov{font-size:min(2.9vw,4.4vh);line-height:1.22;margin:0 0 1.8vh;font-weight:400;}
+  .uvodni{font-size:16px;line-height:1.6;color:#2e2a21;margin:0 0 2.2vh;}
+  .uvodni::first-letter{font-family:"Bodoni MT",Didot,Georgia,serif;font-size:48px;float:left;line-height:.82;padding:4px 9px 0 0;}
+  #pocetna .gumb{margin:7px 0;padding:13px;}
+  .sitno{font-size:13px;font-style:italic;color:var(--sivo);text-align:center;margin-top:4px;}
+
+  /* filtri na oglasima */
+  .filtri{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--isticanje);border:1px solid var(--rub);padding:12px;margin:0 0 14px;}
+  .filtri select{font-size:16px;padding:9px 10px;border:1px solid var(--tinta);background:#fffdf6;font-family:Georgia,serif;}
+  .kvacica{font-family:Arial,sans-serif;font-size:14px;display:flex;align-items:center;gap:7px;cursor:pointer;}
+  .kvacica input{width:19px;height:19px;}
+  .tagic{display:inline-block;border:1px solid var(--crvena);color:var(--crvena);font-family:Arial,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 9px;margin-left:8px;vertical-align:middle;}
+
+  /* izbor jednog od ponudenih (da/ne, odnos) */
+  .dane{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 16px;}
+  .dane button{min-width:104px;padding:11px 14px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;background:transparent;color:var(--sivo);border:1px solid #8a8272;}
+  .dane button.da{background:var(--tinta);color:var(--papir);border-color:var(--tinta);}
+
+  /* sms kod */
+  .kod-red{display:flex;gap:10px;margin:14px 0;}
+  .kod-red span{width:64px;height:76px;border:1px solid var(--tinta);background:#fffdf6;display:flex;align-items:center;justify-content:center;font-family:"Bodoni MT",Georgia,serif;font-size:40px;font-weight:700;}
+
+  label.polje{display:block;font-size:20px;font-weight:600;margin:14px 0 6px;}
+
+  /* odabir podrucja (zupanije - gradovi - kvartovi) */
+  .pod-naslov{font-family:Arial,sans-serif;color:var(--crvena);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;margin:16px 0 8px;}
+  .cipovi{display:flex;flex-wrap:wrap;gap:8px;}
+  .cip{border:1px solid #8a8272;background:transparent;color:var(--sivo);font-family:Arial,sans-serif;font-size:13.5px;letter-spacing:.05em;padding:8px 13px;cursor:pointer;}
+  .cip:hover{border-color:var(--crvena);color:var(--crvena);}
+  .cip.da{background:var(--tinta);color:var(--papir);border-color:var(--tinta);}
+  .skupina-ime{font-family:Georgia,serif;font-style:italic;font-size:15.5px;color:var(--sivo);margin:12px 0 6px;}
+
+  /* veca slova za starije */
+  body.velika{font-size:23px;}
+  body.velika .kartica h3{font-size:27px;}
+  body.velika .meta{font-size:18.5px;}
+  body.velika .gumb{font-size:19px;}
+  body.velika h2{font-size:36px;}
+  body.velika .malitekst{font-size:18px;}
+  body.velika .plocica{font-size:24px;}
+</style>
+</head>
+<body>
+
+<!-- ikone i sheme (nevidljive definicije) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ic-drva" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="14" cy="29" r="8"/><circle cx="30" cy="29" r="8"/><circle cx="22" cy="15" r="8"/><circle cx="14" cy="29" r="2.5"/><circle cx="30" cy="29" r="2.5"/><circle cx="22" cy="15" r="2.5"/></g></symbol>
+    <symbol id="ic-zarulja" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="16" r="10"/><path d="M18 26 v4 h8 v-4"/><path d="M19 34 h6"/></g></symbol>
+    <symbol id="ic-ducan" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15 h20 l-2 23 h-16 z"/><path d="M17 15 a5 6 0 0 1 10 0"/></g></symbol>
+    <symbol id="ic-ljekarna" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="22" cy="22" r="15"/><path d="M22 15 v14 M15 22 h14"/></g></symbol>
+    <symbol id="ic-ciscenje" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M29 6 L20 24"/><path d="M13 24 h14 l4 12 H9 z"/></g></symbol>
+    <symbol id="ic-snijeg" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M22 7 V37 M9 14.5 L35 29.5 M35 14.5 L9 29.5"/></g></symbol>
+    <symbol id="ic-auto" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 29 l4 -9 h22 l4 9 z"/><path d="M5 29 h34"/><circle cx="14" cy="33" r="3.5"/><circle cx="30" cy="33" r="3.5"/></g></symbol>
+    <symbol id="ic-olovka" viewBox="0 0 44 44"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 14 l4 4 L18 34 l-6 2 2 -6 z"/><path d="M27 17 l4 4"/></g></symbol>
+    <symbol id="sc-iskaznica" viewBox="0 0 600 300">
+      <rect width="600" height="300" fill="#e9e3d4"/>
+      <rect x="146" y="76" width="320" height="180" fill="#cfc8b6"/>
+      <rect x="138" y="68" width="320" height="180" fill="#faf7ef" stroke="#8a8272" stroke-width="2"/>
+      <rect x="138" y="68" width="320" height="36" fill="#17150f"/>
+      <rect x="152" y="82" width="110" height="9" fill="#d8d2c2"/>
+      <rect x="160" y="120" width="92" height="108" fill="#d8d2c2"/>
+      <circle cx="206" cy="158" r="21" fill="#b9b19e"/>
+      <path d="M185 156 a21 21 0 0 1 42 0 z" fill="#5a5244"/>
+      <path d="M172 228 q0 -34 34 -34 q34 0 34 34 z" fill="#5a5244"/>
+      <rect x="272" y="128" width="160" height="12" fill="#c9c1ad"/>
+      <rect x="272" y="154" width="120" height="12" fill="#c9c1ad"/>
+      <rect x="272" y="180" width="146" height="12" fill="#c9c1ad"/>
+      <circle cx="460" cy="232" r="36" fill="#8c2f24"/>
+      <path d="M444 232 l12 13 l22 -27" stroke="#f8f4ea" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="demobar">
+  <span class="oznaka">MOCKUP</span>
+  <button onclick="idi('pocetna')" id="nav-pocetna">Početna</button>
+  <button onclick="idi('p1')" id="nav-p1">Put naručitelja</button>
+  <button onclick="idi('s1')" id="nav-s1">Put pomagača</button>
+  <button onclick="idi('sr1')" id="nav-reg">Prijava pomagača</button>
+  <button onclick="idi('s2')" id="nav-oglasi">Oglasi</button>
+  <button onclick="idi('sigurnost')" id="nav-sigurnost">Sigurnost i naknada</button>
+  <span class="legenda">TKO ŠTO VIDI:
+    <span class="l-svi"><i></i>svi</span>
+    <span class="l-n"><i></i>samo naručitelj</span>
+    <span class="l-p"><i></i>pomagač koji dobije posao</span>
+    <span class="l-t"><i></i>naš tim</span>
+  </span>
+</div>
+
+<!-- ======================= POČETNA ======================= -->
+<section class="ekran" id="pocetna">
+  <div class="dvostruka"></div>
+  <div class="masthead">prisko&ccaron;i.hr</div>
+  <div class="dvostruka" style="border-top-width:1px"></div>
+  <div class="glavno">
+    <figure>
+      <img src="../slike/naslovna.jpg" alt="Pomagač drži gospođu za ruke u toplom razgovoru uz prozor" style="object-position:center top;">
+    </figure>
+    <div>
+      <div class="kicker">Pomoć u tvom kvartu</div>
+      <h1 class="naslov" style="font-family:Georgia,serif">Kad obitelj nije blizu, dobri ljudi priskaču.</h1>
+      <p class="uvodni">Umirovljenik objavi što treba — drva, žarulju, namirnice — do kada i koliko plaća. Provjereni pomagač iz kvarta prihvati posao jednim pritiskom. Ako je cijena preniska, smije ponuditi najviše pola više, a odluka je uvijek naručiteljeva.</p>
+      <button class="gumb glina" onclick="idi('p1')">Trebam pomoć</button>
+      <button class="gumb tamni" onclick="idi('s1')">&Zcaron;elim pomoći</button>
+      <button class="gumb obrub" onclick="idi('z1')">Trebam pomoć za nekoga</button>
+      <div style="text-align:center;margin-top:6px"><button class="link-kako" onclick="idi('sigurnost')">Kako radi?</button> <span style="color:#b9b19e">&middot;</span> <button class="link-kako" style="font-size:10.5px;color:#8a8272;text-transform:none;letter-spacing:.06em" onclick="idi('uvjeti')">Uvjeti korištenja</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= POMOĆ ZA NEKOGA DRUGOG ======================= -->
+<section class="ekran" id="z1">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('pocetna')">Natrag na početnu</button>
+  <h2>Pomoć za nekoga drugog</h2>
+  <p>Oglas vodite <b>vi</b> — iz drugog grada ili iz inozemstva. Pomagač dolazi k vašoj osobi, a sve obavijesti i plaćanje idu preko vas (karticom iz daljine, ili ona plati gotovinom na vratima).</p>
+  <label class="polje">Kome treba pomoć? (ime)</label>
+  <input type="text" value="Ana K., moja mama">
+  <label class="polje">Gdje ta osoba živi?</label>
+  <input type="text" value="Karlovac — Banija, Primorska 00">
+  <label class="polje">Njezin telefon — da se pomagač najavi (nije obavezno) <span class="tko tko-p">vidi samo pomagač koji dobije posao</span></label>
+  <input type="text" value="047 000 000">
+  <label class="polje">Tko ste vi toj osobi?</label>
+  <div class="dane">
+    <button class="da" onclick="birajJedan(this)">Kći / sin</button>
+    <button onclick="birajJedan(this)">Unuk / unuka</button>
+    <button onclick="birajJedan(this)">Susjed</button>
+    <button onclick="birajJedan(this)">Drugo</button>
+  </div>
+  <button class="gumb glina" onclick="idi('p1')">Dalje: što joj treba?</button>
+  <div class="malitekst">Osoba kojoj pomažete ne mora imati ni mobitel ni račun — sve vodite vi, a pomagač se najavi na njezin kućni broj ako ga upišete.</div>
+</section>
+
+<!-- ======================= UMIROVLJENIK — KORAK 1 ======================= -->
+<section class="ekran" id="p1">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('pocetna')">Natrag na početnu</button>
+  <button class="gumb obrub gumb-slova" style="width:auto;float:right;margin:0" onclick="velikaSlova()">Veća slova</button>
+  <div class="korak">Korak 1 od 4</div>
+  <h2>Što trebate?</h2>
+  <p class="malitekst">Pritisnite sličicu. Ako ne nađete svoje, pritisnite „Nešto drugo" i opišite svojim riječima.</p>
+
+  <div class="mreza">
+    <div class="plocica" onclick="odaberiPosao('Donošenje drva')"><svg><use href="#ic-drva"/></svg>Donošenje drva</div>
+    <div class="plocica" onclick="odaberiPosao('Žarulja i sitni popravci')"><svg><use href="#ic-zarulja"/></svg>Žarulja i sitni popravci</div>
+    <div class="plocica" onclick="odaberiPosao('Dućan i namirnice')"><svg><use href="#ic-ducan"/></svg>Dućan i namirnice</div>
+    <div class="plocica" onclick="odaberiPosao('Ljekarna — lijekovi')"><svg><use href="#ic-ljekarna"/></svg>Ljekarna — lijekovi</div>
+    <div class="plocica" onclick="odaberiPosao('Čišćenje stana')"><svg><use href="#ic-ciscenje"/></svg>Čišćenje stana</div>
+    <div class="plocica" onclick="odaberiPosao('Snijeg i dvorište')"><svg><use href="#ic-snijeg"/></svg>Snijeg i dvorište</div>
+    <div class="plocica" onclick="odaberiPosao('Prijevoz i pratnja (liječnik, pošta)')"><svg><use href="#ic-auto"/></svg>Prijevoz i pratnja</div>
+    <div class="plocica" onclick="pokaziSlobodniUpis()"><svg><use href="#ic-olovka"/></svg>Nešto drugo — opišite</div>
+  </div>
+
+  <div id="slobodni-upis" style="display:none">
+    <h2 style="margin-top:26px">Opišite svojim riječima</h2>
+    <textarea id="opis" placeholder="Na primjer: ne radi mi svjetlo u hodniku i curi mi slavina u kupaonici..."></textarea>
+    <div class="gumbred" style="margin-top:10px">
+      <button class="gumb" onclick="pametniPomocnik()">Pošalji opis</button>
+      <button class="gumb obrub" onclick="demoOpis()">(demo) Upiši primjer umjesto mene</button>
+    </div>
+    <div id="ai-odgovor" style="display:none">
+      <div class="info">
+        <b>Pametni pomoćnik razumije:</b> trebate <b>2 posla</b> —
+        <br>1. zamjena žarulje (hodnik)
+        <br>2. popravak slavine (kupaonica)
+        <br><br>Je li to točno?
+      </div>
+      <div class="gumbred">
+        <button class="gumb" onclick="odaberiPosao('Žarulja + popravak slavine')">Da, točno je</button>
+        <button class="gumb tamni" onclick="document.getElementById('ai-odgovor').style.display='none'">Ne, ispravit ću opis</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= UMIROVLJENIK — KORAK 2 ======================= -->
+<section class="ekran" id="p2">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('p1')">Natrag</button>
+  <div class="korak">Korak 2 od 4 — posao: <b id="p2-posao"></b></div>
+  <h2>Do kada posao mora biti obavljen?</h2>
+  <button class="gumb" onclick="odaberiKad('Danas')">Danas</button>
+  <button class="gumb" onclick="odaberiKad('Sutra')">Sutra</button>
+  <button class="gumb" onclick="odaberiKad('Ovaj tjedan')">Ovaj tjedan — kad god</button>
+  <button class="gumb tamni" onclick="odaberiKad('Točan datum (odabir iz kalendara)')">Odabrat ću točan datum</button>
+</section>
+
+<!-- ======================= UMIROVLJENIK — KORAK 3 ======================= -->
+<section class="ekran" id="p3">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('p2')">Natrag</button>
+  <div class="korak">Korak 3 od 4</div>
+  <h2>Koliko plaćate?</h2>
+  <p>Cijena <b>piše na oglasu</b>. Posao dobiva prvi pomagač koji je prihvati. Ako je cijena preniska, pomagač može poslati protuponudu — najviše <b>50 % veću</b> (kod poslova s autom do 80 %) — a vi je možete prihvatiti ili odbiti.</p>
+
+  <div class="cijena-red">
+    <button onclick="promijeniCijenu(-1)">&minus;</button>
+    <div class="iznos"><span id="cijena">5</span> &euro;</div>
+    <button onclick="promijeniCijenu(1)">+</button>
+  </div>
+  <div style="text-align:center;margin:-6px 0 12px"><span class="tko tko-svi">cijena piše na oglasu — vide je svi pomagači</span></div>
+
+  <div id="upozorenje-cijena" class="upozorenje" style="display:none">
+    <b>Vaš iznos je možda prenizak.</b><br>
+    Za posao „<span id="up-posao"></span>" u <b>Zagrebu</b> većina ljudi plati <b>5 &euro; ili više</b>.
+    S ovako niskim iznosom možda se nitko neće javiti.
+    <div class="gumbred" style="margin-top:12px">
+      <button class="gumb" onclick="povecajNa5()">Povećaj na 5 &euro;</button>
+      <button class="gumb tamni" onclick="nastaviNaPregled()">Svejedno ostavi moj iznos</button>
+    </div>
+    <div class="malitekst" style="margin-top:8px">Ovo upozorenje prikazujemo samo za česte poslove, i uspoređujemo s cijenama u <b>vašem kraju</b> (Zagreb je skuplji od npr. Karlovca).</div>
+  </div>
+
+  <button class="gumb glina" id="p3-dalje" onclick="provjeriCijenu()">Dalje</button>
+</section>
+
+<!-- ======================= UMIROVLJENIK — KORAK 4 ======================= -->
+<section class="ekran" id="p4">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('p3')">Natrag</button>
+  <div class="korak">Korak 4 od 4</div>
+  <h2>Provjerite i objavite</h2>
+  <div class="kartica">
+    <h3 id="p4-posao"></h3>
+    <div class="meta" style="margin:5px 0">Objavljeno: danas u 14:02 <span class="tko tko-svi">vide svi pomagači</span></div>
+    <div class="meta" style="margin:5px 0">Obaviti najkasnije: <span id="p4-kad"></span> <span class="tko tko-svi">vide svi pomagači</span></div>
+    <div class="meta" style="margin:5px 0">Kvart: Zagreb — Trešnjevka <span class="tko tko-svi">vide svi pomagači</span></div>
+    <div class="meta" style="margin:5px 0">Cijena: <b><span id="p4-cijena"></span> &euro;</b> <span class="tko tko-svi">piše na oglasu</span></div>
+    <div class="meta" style="margin:5px 0">Točna adresa: Trešnjevačka 00, 1. kat <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
+    <div class="meta" style="margin:5px 0">Vaš mobitel: 098 000 0000 <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
+    <div class="meta" style="margin:5px 0">Pristigle protuponude <span class="tko tko-n">vidite samo vi</span></div>
+  </div>
+  <p style="font-size:22px;font-weight:600;margin-bottom:4px">Kako ćete platiti?</p>
+  <div class="gumbred">
+    <button class="gumb" id="btn-gotovina" onclick="odaberiNacin('gotovina')">Gotovinom</button>
+    <button class="gumb obrub" id="btn-kartica" onclick="odaberiNacin('kartica')">Karticom</button>
+  </div>
+  <div class="malitekst" id="kartica-info" style="display:none">Kod plaćanja karticom dodaje se naknada za kartično plaćanje (na ovakav posao oko 0,32 &euro;) i nju plaćate vi. Pomagač uvijek dobije puni dogovoreni iznos. Novac se skida s kartice tek kad potvrdite da je posao obavljen. Zgodno ako oglas plaća obitelj iz daljine.</div>
+  <div class="malitekst" style="margin-top:10px">Oglas može objaviti i netko iz obitelji umjesto vas — sa svog računa, u vaše ime.</div>
+  <div class="malitekst" style="margin-top:6px">Provjereni pomagači s dokumentom &middot; protuponude su ograničene (najviše +50 %, s autom +80 %) &middot; uz dogovorenu cijenu ide naknada Priskoči od 0,46 &euro;.</div>
+  <button class="gumb glina" onclick="idi('pr1')">Objavi oglas</button>
+</section>
+
+<!-- ======================= NARUČITELJ — RAČUN (SAMO PRVA OBJAVA) ======================= -->
+<section class="ekran" id="pr1">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('p4')">Natrag</button>
+  <div class="korak">Samo kod prve objave oglasa</div>
+  <h2>Recite nam tko ste — bez lozinke</h2>
+  <p>Da bismo vas mogli nazvati kad se pomagač javi, trebamo samo <b>vaše ime i broj mobitela</b>. Nema lozinke, nema e-pošte, nema dokumenata.</p>
+  <label class="polje">1. Vaše ime</label>
+  <input type="text" value="Marija H.">
+  <label class="polje">2. Vaš broj mobitela <span class="tko tko-p">vidi samo pomagač koji dobije posao</span></label>
+  <input type="text" value="098 000 0000">
+  <p style="margin:14px 0 6px"><b>3.</b> Da provjerimo da je broj stvarno vaš, šaljemo vam običnu SMS poruku s brojem od 4 znamenke:</p>
+  <button class="gumb" onclick="pokaziKod()">Pošalji mi SMS s kodom</button>
+  <div id="kod-dio" style="display:none">
+    <div class="info">Na broj <b>098 000 0000</b> stigla je poruka: <i>„Vaš Priskoči kod je 7319."</i></div>
+    <label class="polje">4. Prepišite te 4 znamenke iz poruke:</label>
+    <div class="kod-red"><span>7</span><span>3</span><span>1</span><span>9</span></div>
+    <div class="malitekst">(u demou su znamenke već upisane umjesto vas — kod ne trebate pamtiti, svaki put stigne novi)</div>
+    <button class="gumb glina" onclick="objavi()">Potvrdi i objavi oglas</button>
+  </div>
+  <div class="malitekst" style="margin-top:10px">Sljedeći put ovog koraka nema — prepoznajemo vaš broj. Račun može otvoriti i obitelj pa voditi oglase u vaše ime.</div>
+</section>
+
+<!-- ======================= UMIROVLJENIK — OBJAVLJENO ======================= -->
+<section class="ekran" id="p5">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <h2>Oglas je objavljen</h2>
+  <figure class="novin">
+    <img src="../slike/predaja.jpg" alt="Volonterka predaje vrećicu s namirnicama gospodinu">
+    <figcaption>Pomoć je stigla na vrata — s osmijehom. (arhiva Priskoči)</figcaption>
+  </figure>
+  <div class="info">Čim netko prihvati vašu cijenu ili pošalje protuponudu, mi vas <b>nazovemo ili pošaljemo SMS</b>. Ne morate ništa više raditi.</div>
+  <div class="gumbred">
+    <button class="gumb obrub" onclick="demoPrihvat()">(demo) Netko prihvati vašu cijenu</button>
+    <button class="gumb obrub" onclick="demoProtu()">(demo) Netko ponudi više</button>
+  </div>
+
+  <div id="protu-stigla" style="display:none">
+    <div class="upozorenje">
+      <b>Stigla je protuponuda.</b> <span class="tko tko-n">vidite samo vi</span><br>
+      Ivan nudi <b><span id="p5-protu"></span> &euro;</b> (vaša cijena <span id="p5-cijena2"></span> &euro; + 2 &euro;) uz poruku: <i>„Drva su na prvom katu bez lifta, treba više tura."</i>
+      <div class="gumbred" style="margin-top:12px">
+        <button class="gumb" onclick="prihvatiProtu()">Prihvati <span id="p5-protu2"></span> &euro;</button>
+        <button class="gumb tamni" onclick="odbijProtu()">Odbij — čekam drugoga</button>
+      </div>
+      <div class="malitekst" style="margin-top:8px">Protuponuda smije biti najviše 50 % iznad vaše cijene (kod poslova s autom do 80 %). Ako je odbijete, oglas ostaje objavljen.</div>
+    </div>
+  </div>
+
+  <div id="ponuda-stigla" style="display:none">
+    <div class="uspjeh">
+      <b>Posao je dogovoren!</b> Ivan će obaviti posao za <b><span id="p5-dogovor"></span> &euro;</b><span id="p5-kako"></span>. <b><span id="p5-placanje"></span></b>
+    </div>
+    <div class="kartica">
+      <div class="red">
+        <svg class="portret" viewBox="0 0 90 90" role="img" aria-label="Slika pomagača"><rect width="90" height="90" fill="#d8d2c2"/><circle cx="45" cy="38" r="17" fill="#b9b19e"/><path d="M28 36 a17 17 0 0 1 34 0 z" fill="#5a5244"/><path d="M17 90 q0 -28 28 -28 q28 0 28 28 z" fill="#5a5244"/></svg>
+        <div>
+          <h3>Ivan K., 21 — student <span class="znacka">Provjeren</span></h3>
+          <div class="meta">37 obavljenih poslova &middot; govori hrvatski &middot; dokument provjeren</div>
+          <div class="malitekst" style="margin-top:4px">„Brz i uredan, donio je i složio sva drva. Sve pohvale." — naručiteljica, listopad</div>
+        </div>
+      </div>
+      <button class="gumb" style="margin-top:14px">Nazovi Ivana — 072 xxx xxx</button>
+      <div class="malitekst">Nakon posla pritisnete „Posao je obavljen". Ako želite, možete napisati par riječi o Ivanu — ne morate.</div>
+    </div>
+    <button class="gumb tamni" onclick="idi('pocetna')">Natrag na početnu</button>
+  </div>
+</section>
+
+<!-- ======================= STUDENT — VERIFIKACIJA ======================= -->
+<section class="ekran" id="s1">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('pocetna')">Natrag na početnu</button>
+  <h2>Postani pomagač</h2>
+  <svg style="display:block;width:100%;height:auto;border:1px solid var(--tinta);margin-bottom:18px" viewBox="0 0 600 300" role="img" aria-label="Osobna iskaznica s potvrdnim pečatom"><use href="#sc-iskaznica"/></svg>
+  <p>Radimo s ljudima kojima drugi otvaraju vrata svog doma — zato je provjera <b>stroga i obavezna</b>. Umirovljenici ne prolaze nikakvu provjeru niti šalju dokumente.</p>
+  <ol class="koraci-lista">
+    <li><span class="br">1</span><div><b>Slikaj osobnu iskaznicu ili vozačku</b><br><span class="malitekst">Vidi je samo naš tim, nikad drugi korisnici. Čuva se šifrirano.</span></div></li>
+    <li><span class="br">2</span><div><b>Slikaj se uživo</b><br><span class="malitekst">Uspoređujemo s dokumentom — da nitko ne radi pod tuđim imenom. Ova slika ide na tvoj profil i vide je naručitelji.</span></div></li>
+    <li><span class="br">3</span><div><b>Kratka provjera hrvatskog jezika</b><br><span class="malitekst">Nekoliko pitanja — naši korisnici su stariji ljudi i moraš se moći sporazumjeti.</span></div></li>
+    <li><span class="br">4</span><div><b>Auto i prijevoz</b><br><span class="malitekst">Kažeš imaš li auto, dolaziš li u udaljenija mjesta i želiš li voziti starije (liječnik, pošta, dućan).</span></div></li>
+    <li><span class="br">5</span><div><b>Odobrenje u roku 24 sata</b><br><span class="malitekst">Dobivaš oznaku <span class="znacka">Provjeren</span> i možeš se javljati na oglase.</span></div></li>
+  </ol>
+  <button class="gumb glina" onclick="idi('sr1')">Kreni s prijavom (demo)</button>
+  <button class="gumb tamni" onclick="idi('s2')">Preskoči — pogledaj oglase (demo)</button>
+</section>
+
+<!-- ======================= POMAGAČ — PRIJAVA, 5 KORAKA ======================= -->
+<section class="ekran" id="sr1">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('s1')">Natrag</button>
+  <div class="korak">Prijava pomagača — korak 1 od 5</div>
+  <h2>Tvoji podaci</h2>
+  <label class="polje">Ime i prezime</label>
+  <input type="text" value="Ivan Kovač">
+  <label class="polje">Mobitel</label>
+  <input type="text" value="091 000 0000">
+  <label class="polje">Grad u kojem pomažeš</label>
+  <input type="text" value="Zagreb">
+  <button class="gumb glina" onclick="idi('sr2')">Dalje</button>
+</section>
+
+<section class="ekran" id="sr2">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('sr1')">Natrag</button>
+  <div class="korak">Prijava pomagača — korak 2 od 5</div>
+  <h2>Slikaj osobnu ili vozačku</h2>
+  <svg style="display:block;width:100%;max-width:420px;height:auto;border:1px solid var(--tinta);margin-bottom:14px" viewBox="0 0 600 300" role="img" aria-label="Osobna iskaznica"><use href="#sc-iskaznica"/></svg>
+  <button class="gumb" onclick="demoKvacica('sr2-ok')">Slikaj dokument (demo)</button>
+  <div id="sr2-ok" class="uspjeh" style="display:none"><b>Dokument primljen.</b> Čuva se šifrirano i briše čim više ne treba. <span class="tko tko-t">vidi samo naš tim</span></div>
+  <button class="gumb glina" onclick="idi('sr3')">Dalje</button>
+</section>
+
+<section class="ekran" id="sr3">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('sr2')">Natrag</button>
+  <div class="korak">Prijava pomagača — korak 3 od 5</div>
+  <h2>Slikaj se uživo</h2>
+  <p>Uspoređujemo lice s dokumentom — da nitko ne radi pod tuđim imenom. Ova slika ide na tvoj profil. <span class="tko tko-svi">profil vide svi</span></p>
+  <button class="gumb" onclick="demoKvacica('sr3-ok')">Uključi kameru (demo)</button>
+  <div id="sr3-ok" class="uspjeh" style="display:none"><b>Lice odgovara dokumentu.</b></div>
+  <button class="gumb glina" onclick="idi('sr4')">Dalje</button>
+</section>
+
+<section class="ekran" id="sr4">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('sr3')">Natrag</button>
+  <div class="korak">Prijava pomagača — korak 4 od 5</div>
+  <h2>Kratka provjera hrvatskog</h2>
+  <p>Primjer pitanja (u pravoj prijavi ih je nekoliko + kratki razgovor):</p>
+  <div class="kartica">
+    <h3>„Gospođa te moli da joj iz ljekarne doneseš lijekove ‘na recept’. Što moraš uzeti kod nje prije odlaska u ljekarnu?"</h3>
+    <div class="gumbred" style="margin-top:12px">
+      <button class="gumb obrub" onclick="hrTocno(this,false)">Ništa — samo novac</button>
+      <button class="gumb obrub" onclick="hrTocno(this,true)">Njezin recept ili zdravstvenu iskaznicu</button>
+      <button class="gumb obrub" onclick="hrTocno(this,false)">Svoju osobnu iskaznicu</button>
+    </div>
+    <div id="sr4-ok" class="uspjeh" style="display:none"><b>Točno.</b></div>
+  </div>
+  <button class="gumb glina" onclick="idi('sr5')">Dalje</button>
+</section>
+
+<section class="ekran" id="sr5">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('sr4')">Natrag</button>
+  <div class="korak">Prijava pomagača — korak 5 od 5</div>
+  <h2>Auto i prijevoz</h2>
+  <label class="polje">Imaš li auto koji smiješ koristiti?</label>
+  <div class="dane"><button class="da" onclick="birajJedan(this)">Da</button><button onclick="birajJedan(this)">Ne</button></div>
+  <label class="polje">Možeš li dolaziti i u udaljenija mjesta — sela i kvartove izvan centra?</label>
+  <div class="dane"><button class="da" onclick="birajJedan(this)">Da</button><button onclick="birajJedan(this)">Ne</button></div>
+  <label class="polje">Želiš li voziti starije osobe — liječnik, bolnica, pošta, dućan?</label>
+  <div class="dane"><button class="da" onclick="birajJedan(this)">Da</button><button onclick="birajJedan(this)">Ne</button></div>
+  <div class="info">Oglasi s vožnjom i u udaljenijim mjestima nose oznaku <span class="tagic" style="margin-left:0">treba auto</span> i nude se samo pomagačima s autom. Za vožnju starijih obavezna je <b>vozačka dozvola</b> (provjerena u koraku 2).</div>
+  <label class="polje">Gdje želiš primati obavijesti o novim poslovima?</label>
+  <div class="pod-naslov">1 &middot; Odaberi županije</div>
+  <div class="cipovi" id="zup-cipovi"></div>
+  <div id="gradovi-dio" style="display:none">
+    <div class="pod-naslov">2 &middot; Odaberi gradove i mjesta</div>
+    <div id="grad-skupine"></div>
+  </div>
+  <div id="kvartovi-dio" style="display:none">
+    <div class="pod-naslov">3 &middot; Odaberi kvartove</div>
+    <div id="kvart-skupine"></div>
+  </div>
+  <div class="info" id="podrucje-sazetak" style="display:none"></div>
+  <div class="malitekst">Čim osvane novi posao u odabranom području, stiže ti obavijest (SMS ili aplikacija). Odabir mijenjaš kad god želiš.</div>
+  <button class="gumb glina" onclick="idi('sr6')">Pošalji prijavu</button>
+</section>
+
+<section class="ekran" id="sr6">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <h2>Prijava je zaprimljena</h2>
+  <div class="uspjeh"><b>Naš tim pregledava tvoje podatke — odobrenje u roku 24 sata.</b> Javimo ti SMS-om. Dok čekaš, slobodno razgledaj oglase; javljati se možeš čim dobiješ oznaku <span class="znacka">Provjeren</span>.</div>
+  <button class="gumb glina" onclick="idi('s2')">Pogledaj oglase</button>
+  <button class="gumb tamni" onclick="idi('pocetna')">Natrag na početnu</button>
+</section>
+
+<!-- ======================= STUDENT — OGLASI ======================= -->
+<section class="ekran" id="s2">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('s1')">Natrag</button>
+  <h2>Oglasi u tvojoj blizini</h2>
+  <p class="malitekst">Cijena naručitelja piše na svakom oglasu — <b>prvi koji je prihvati dobiva posao</b>. Misliš da je prenisko? Pošalji protuponudu: najviše +50 %, kod poslova s autom do +80 %.</p>
+
+  <div class="filtri">
+    <select id="f-vrsta" onchange="filtriraj()">
+      <option value="">Sve vrste posla</option>
+      <option value="drva">Drva i dvorište</option>
+      <option value="ducan">Dućan i dostava</option>
+      <option value="popravci">Sitni popravci</option>
+      <option value="prijevoz">Prijevoz i pratnja</option>
+      <option value="vise">Više poslova odjednom</option>
+    </select>
+    <select id="f-mjesto" onchange="filtriraj()">
+      <option value="">Sva mjesta</option>
+      <option value="zagreb">Zagreb</option>
+      <option value="karlovac">Karlovac</option>
+      <option value="okolica">Okolica i sela</option>
+    </select>
+    <label class="kvacica"><input type="checkbox" id="f-auto" onchange="filtriraj()">samo poslovi za koje treba auto</label>
+    <button class="gumb obrub gumb-slova" style="width:auto;margin:0" onclick="velikaSlova()">Veća slova</button>
+  </div>
+  <p class="malitekst" style="margin-top:-4px">Starijim naručiteljima stranica se sama otvara s velikim slovima — gumb je tu da vidiš kako to izgleda.</p>
+
+  <div class="kartica oglas" data-vrsta="drva" data-mjesto="zagreb" data-auto="0">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-drva"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Donijeti drva iz podruma na 1. kat (oko pola metra drva)</h3>
+        <div class="meta">Zagreb — Trešnjevka &middot; objavljeno danas u 14:02 &middot; obaviti do: <b>danas 18 h</b></div>
+        <div class="meta procjena">procjena trajanja: oko 25 min</div>
+      </div>
+      <div class="cijena-oglas">5 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="ducan" data-mjesto="karlovac" data-auto="0">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-ducan"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Kupovina u dućanu i dostava na 3. kat (bez lifta)</h3>
+        <div class="meta">Karlovac — centar &middot; objavljeno danas u 13:40 &middot; obaviti do: <b>sutra 12 h</b></div>
+        <div class="meta procjena">procjena trajanja: oko 40 min</div>
+      </div>
+      <div class="cijena-oglas">6 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="prijevoz" data-mjesto="zagreb" data-auto="1">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-auto"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Odvesti gospođu na pregled u bolnicu i natrag (čekanje oko 1 h)<span class="tagic">treba auto</span></h3>
+        <div class="meta">Zagreb — Rebro &middot; objavljeno danas u 12:15 &middot; obaviti: <b>utorak u 9 h</b></div>
+        <div class="meta procjena">procjena trajanja: oko 1 h 45 min (s čekanjem)</div>
+      </div>
+      <div class="cijena-oglas">15 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="vise" data-mjesto="zagreb" data-auto="0">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-ljekarna"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Podići lijekove u ljekarni, nanijeti drva za tjedan na 2. kat i zamijeniti žarulju</h3>
+        <div class="meta">Zagreb — Trešnjevka &middot; objavljeno danas u 13:55 &middot; obaviti do: <b>sutra prijepodne</b></div>
+        <div class="meta procjena">procjena trajanja: oko 65 min s autom &middot; oko 80 min pješice</div>
+        <div class="malitekst">Izračun: najbliža otvorena ljekarna 450 m (~15 min) + drva ~8 tura košarom na 2. kat (~35 min) + žarulja (~10 min). Raspon 1–2 h → pišemo donji rub.</div>
+      </div>
+      <div class="cijena-oglas">12 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="popravci" data-mjesto="zagreb" data-auto="0">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-zarulja"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Zamjena dvije žarulje i popravak slavine</h3>
+        <div class="meta">Zagreb — Maksimir &middot; objavljeno jučer u 19:30 &middot; obaviti do: <b>nedjelje</b></div>
+        <div class="meta procjena">procjena trajanja: oko 35 min</div>
+      </div>
+      <div class="cijena-oglas">6 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="drva" data-mjesto="okolica" data-auto="1">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-snijeg"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Pokositi travu i složiti drva uz kuću<span class="tagic">treba auto</span></h3>
+        <div class="meta">Rečica kraj Karlovca (selo, 15 min vožnje) &middot; objavljeno jučer u 10:20 &middot; obaviti do: <b>subote</b></div>
+        <div class="meta procjena">procjena trajanja: oko 2 h</div>
+      </div>
+      <div class="cijena-oglas">25 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div class="kartica oglas" data-vrsta="prijevoz" data-mjesto="karlovac" data-auto="0">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-auto"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Pratnja do pošte i banke (pješice, polako)</h3>
+        <div class="meta">Karlovac — Banija &middot; objavljeno danas u 9:05 &middot; obaviti: <b>četvrtak ujutro</b></div>
+        <div class="meta procjena">procjena trajanja: oko 50 min</div>
+      </div>
+      <div class="cijena-oglas">7 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
+      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+    </div>
+  </div>
+
+  <div id="nema-oglasa" class="info" style="display:none">Za odabrane filtre trenutačno nema oglasa.</div>
+</section>
+
+<!-- ======================= STUDENT — PONUDA ======================= -->
+<section class="ekran" id="s3">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('s2')">Natrag na oglase</button>
+  <div class="red" style="align-items:flex-start;margin-bottom:6px">
+    <div class="ogl-ik"><svg><use href="#ic-drva"/></svg></div>
+    <div style="flex:1">
+      <h2 style="margin:0;border:0;padding:0">Donijeti drva iz podruma na 1. kat</h2>
+      <div class="meta">Zagreb — Trešnjevka &middot; objavljeno danas u 14:02 &middot; obaviti do: <b>danas 18 h</b></div>
+      <div class="meta procjena">procjena trajanja: oko 25 min</div>
+    </div>
+    <div class="cijena-oglas">5 &euro;</div>
+  </div>
+
+  <button class="gumb glina" onclick="prihvatiOdmah()">Prihvati posao za 5 &euro;</button>
+
+  <div class="info" style="margin-top:20px">
+    Misliš da je 5 &euro; premalo za ovaj posao? Pošalji <b>protuponudu</b> — najviše <b>7,50 &euro;</b> (50 % iznad cijene; za poslove s oznakom „treba auto" do 80 % iznad). Naručitelj je može prihvatiti ili odbiti.
+  </div>
+  <label style="font-size:22px;font-weight:600">Tvoja protuponuda</label>
+  <div class="cijena-red">
+    <button onclick="promijeniPonudu(-0.5)">&minus;</button>
+    <div class="iznos"><span id="ponuda-iznos">6</span> &euro;</div>
+    <button onclick="promijeniPonudu(0.5)">+</button>
+  </div>
+  <div class="malitekst" style="text-align:center">Naknadu Priskoči (0,46 &euro;) plaća naručitelj — tebi se ništa ne naplaćuje.</div>
+  <button class="gumb" onclick="posaljiProtuponudu()">Pošalji protuponudu</button>
+
+  <div id="ponuda-dobio" class="uspjeh" style="display:none">
+    <b>Posao je tvoj za 5 &euro;!</b> Prvi si prihvatio cijenu naručitelja.<br><br>
+    <b style="color:#1f4e79">Adresa: Trešnjevačka 00, 1. kat &middot; Kontakt: Marija H. (072 xxx xxx)</b> <span class="tko tko-p">vidiš samo ti — posao je tvoj</span><br>
+    <span class="malitekst">Naručitelj plaća gotovinom na licu mjesta ili karticom kroz aplikaciju (piše u detaljima posla) — u oba slučaja ti dobiješ puni dogovoreni iznos; naknadu Priskoči (0,46 &euro;) plaća naručitelj.</span>
+    <button class="gumb tamni" onclick="idi('s4')">Moji poslovi</button>
+  </div>
+
+  <div id="protu-poslana" class="upozorenje" style="display:none">
+    <b>Protuponuda od <span id="protu-iznos"></span> &euro; je poslana naručitelju.</b><br>
+    Ako je prihvati, posao je tvoj — javimo ti SMS-om. Dok on odlučuje, posao svejedno može uzeti netko tko prihvati 5 &euro;.
+  </div>
+</section>
+
+<!-- ======================= STUDENT — MOJI POSLOVI ======================= -->
+<section class="ekran" id="s4">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('s2')">Natrag na oglase</button>
+  <h2>Moji poslovi</h2>
+  <div class="kartica">
+    <h3>Ovaj mjesec</h3>
+    <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700">87,50 &euro; zarađeno</div>
+    <div class="meta">14 obavljenih poslova &middot; 5 pisanih pohvala &middot; bez ikakvih naknada</div>
+  </div>
+  <div class="kartica">
+    <h3>Donijeti drva — danas u 16 h</h3>
+    <div class="meta">Marija H., Trešnjevka &middot; dogovoreno: 5 &euro;</div>
+    <button class="gumb" style="font-size:14px;padding:13px">Posao je obavljen</button>
+  </div>
+  <button class="gumb tamni" onclick="idi('pocetna')">Natrag na početnu</button>
+</section>
+
+<!-- ======================= SIGURNOST I NAKNADA ======================= -->
+<section class="ekran" id="sigurnost">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('pocetna')">Natrag na početnu</button>
+  <h2>Sigurnost i naknada</h2>
+  <figure class="novin">
+    <img src="../slike/sigurnost.jpg" alt="Pomagačica predaje kutiju starijoj gospođi">
+    <figcaption>Provjereni pomagači. (arhiva Priskoči)</figcaption>
+  </figure>
+
+  <div class="kartica">
+    <h3>Tko smije pomagati?</h3>
+    Samo <b>provjereni</b> ljudi: osobna ili vozačka + slikanje uživo (uspoređujemo lice s dokumentom) + provjera hrvatskog jezika. Ocjena i zvjezdica nema — ali nakon posla i naručitelj i pomagač mogu, ako žele, napisati par riječi jedan o drugome, pa pohvale stoje na profilu.
+  </div>
+
+  <div class="kartica">
+    <h3>Cijena i protuponude</h3>
+    Cijena naručitelja <b>piše na oglasu</b> — prvi pomagač koji je prihvati dobiva posao, odmah. Ako je cijena preniska, pomagač može poslati <b>protuponudu</b>: najviše <b>50 % iznad</b> cijene, a kod poslova s autom (vožnja, udaljenija mjesta) <b>do 80 % iznad</b>. Naručitelj je može prihvatiti ili odbiti; dok odlučuje, oglas ostaje objavljen. Na svakom oglasu piše i <b>kad je objavljen</b> i <b>do kada posao mora biti obavljen</b>.
+  </div>
+
+  <div class="kartica">
+    <h3>Što s umirovljenicima?</h3>
+    Nikakva provjera, nikakvi dokumenti, nikakva slika. Samo ime, telefon i kvart. Stranica im se prikazuje <b>velikim slovima</b>. Oglas može voditi i <b>obitelj u njihovo ime</b> (npr. kći iz Njemačke objavi oglas za mamu u Karlovcu — gumb „&Zcaron;elim pomoć za nekoga" na početnoj).
+  </div>
+
+  <div class="kartica">
+    <h3>Auto i prijevoz</h3>
+    Kod prijave svaki pomagač kaže <b>ima li auto</b>, dolazi li u <b>udaljenija mjesta</b> (sela, kvartovi izvan centra) i želi li <b>voziti starije</b> — liječnik, bolnica, pošta, dućan. Takvi oglasi nose oznaku <span class="tagic" style="margin-left:0">treba auto</span> i nude se samo pomagačima s autom; za vožnju starijih obavezna je vozačka dozvola.
+  </div>
+
+  <div class="kartica">
+    <h3>Kako se plaća posao?</h3>
+    Na izbor naručitelja: <b>gotovinom</b> izravno pomagaču kad je posao gotov, ili <b>karticom kroz aplikaciju</b> (zgodno kad oglas plaća obitelj iz daljine). Kod kartice se dodaje naknada za kartično plaćanje i <b>nju plaća naručitelj</b> — pomagač u oba slučaja dobije puni dogovoreni iznos. Novac se s kartice skida tek kad naručitelj potvrdi da je posao obavljen.
+  </div>
+
+  <div class="kartica">
+    <h3>Od čega živi Priskoči?</h3>
+    <b>0,46 &euro; po dogovorenom poslu — plaća naručitelj</b>, jednostavno se doda na dogovorenu cijenu. Objava oglasa je besplatna, gledanje oglasa je besplatno, neuspješne ponude su besplatne, a <b>pomagač ne plaća ništa</b>. Kod kartice se naknada naplati automatski zajedno s cijenom; kod gotovine pomagač je ubire uz cijenu i prosljeđuje platformi.
+  </div>
+
+  <div class="kartica">
+    <h3>Upozorenje na prenisku cijenu</h3>
+    Za česte poslove (drva, dućan, žarulja...) pratimo koliko se stvarno plaća <b>po regiji</b>. Ako je cijena u najnižih 10 % za taj posao u tom kraju, umirovljeniku odmah kod objave kažemo: „Ovo je možda prenisko — većina plati X &euro; ili više." Za rijetke i neobične poslove ne prikazujemo ništa, jer nemamo s čime usporediti.
+  </div>
+
+  <div class="kartica">
+    <h3>Procjena trajanja</h3>
+    Za česte poslove uz oglas piše i koliko otprilike traju, da pomagač zna što prihvaća. Računamo iz dijelova posla: najbliža <b>otvorena</b> ljekarna od adrese, ide li se autom ili pješice, koliko naramaka drva stane u košaru i koliko je tura po stubama, prosječno vrijeme za žarulju... Kod raspona namjerno pišemo broj uz <b>donji rub</b> — ako izračun kaže 1–2 sata, na oglasu piše „oko 65 min".
+  </div>
+
+  <div class="kartica">
+    <h3>Obavijesti o novim poslovima</h3>
+    Pomagač kod prijave bira <b>županije</b>, u njima <b>gradove i mjesta</b>, a u većim gradovima (Zagreb, Split, Rijeka, Osijek, Zadar, Pula, Varaždin, Karlovac, Šibenik, Dubrovnik, Velika Gorica, Čakovec) i <b>pojedine kvartove</b>. Obavijest (SMS ili aplikacija) stiže čim u odabranom području osvane novi posao; odabir mijenja kad god želi.
+  </div>
+
+  <div class="kartica">
+    <h3>Tko što vidi?</h3>
+    <div class="meta" style="margin:7px 0">Opis posla, kvart, rok, cijena i profil pomagača <span class="tko tko-svi">vide svi</span></div>
+    <div class="meta" style="margin:7px 0">Pristigle protuponude <span class="tko tko-n">samo naručitelj</span></div>
+    <div class="meta" style="margin:7px 0">Točna adresa i brojevi telefona <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
+    <div class="meta" style="margin:7px 0">Dokumenti pomagača (osobna, vozačka) <span class="tko tko-t">samo naš tim</span></div>
+  </div>
+
+  <p style="text-align:center;margin-top:22px"><button class="link-kako" onclick="idi('uvjeti')">Uvjeti korištenja</button></p>
+</section>
+
+<!-- ======================= UVJETI KORIŠTENJA (pravni dokument) ======================= -->
+<section class="ekran" id="uvjeti">
+  <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
+  <button class="nazad" onclick="idi('pocetna')">Natrag na početnu</button>
+  <h2>Uvjeti korištenja</h2>
+  <p class="malitekst">Nacrt za mockup — prije objave prave stranice dati odvjetniku na pregled. Zadnja izmjena: 7. studenoga 2026.</p>
+
+  <div class="kartica">
+    <h3>1. Što je priskoči.hr</h3>
+    priskoči.hr je internetska oglasna ploča koja <b>povezuje</b> naručitelje (osobe kojima treba pomoć ili njihovu obitelj) i pomagače. priskoči.hr <b>nije izvođač poslova</b>, nije agencija za posredovanje pri zapošljavanju, nije poslodavac pomagačima niti ugovorna strana u poslu.
+  </div>
+  <div class="kartica">
+    <h3>2. Ugovor sklapaju korisnici izravno</h3>
+    Dogovor o poslu — što se radi, kada, za koju cijenu — nastaje <b>izravno između naručitelja i pomagača</b>. priskoči.hr samo prenosi oglase, ponude i obavijesti.
+  </div>
+  <div class="kartica">
+    <h3>3. Isključenje odgovornosti</h3>
+    U najvećoj mjeri dopuštenoj propisima Republike Hrvatske, priskoči.hr <b>ne odgovara</b> za: loše, nepotpuno ili nepravodobno obavljen posao; štetu na stvarima, imovini ili osobama nastalu u vezi s obavljanjem posla; ponašanje korisnika; točnost podataka koje su korisnici naveli u oglasima, ponudama i profilima; izostanak pomagača ili naručitelja s dogovorenog posla; niti za procjene trajanja i usporedbe cijena, koje su informativne. Korisnici posao dogovaraju i obavljaju <b>na vlastitu odgovornost</b>.
+  </div>
+  <div class="kartica">
+    <h3>4. Provjera pomagača nije jamstvo</h3>
+    Provjeru pomagača (dokument, slikanje uživo, provjera jezika) provodimo pažljivo, ali ona je <b>mjera opreza, a ne jamstvo</b> stručnosti, pouzdanosti ili kvalitete rada, niti preporuka platforme.
+  </div>
+  <div class="kartica">
+    <h3>5. Naknada</h3>
+    Naknada iznosi 0,46 € po dogovorenom poslu i plaća je naručitelj — dodaje se na dogovorenu cijenu. Kod kartičnog plaćanja naručitelj plaća i naknadu kartičnog procesora. Objava oglasa, razgledavanje i slanje ponuda su besplatni.
+  </div>
+  <div class="kartica">
+    <h3>6. Sporovi među korisnicima</h3>
+    Sporove iz obavljenog ili neobavljenog posla rješavaju naručitelj i pomagač međusobno. priskoči.hr može, na zahtjev i prema vlastitoj procjeni, pomoći posredovanjem, ali na to <b>nije obvezan</b>. Korisnicima koji krše pravila ili zloupotrebljavaju platformu možemo ukinuti račun.
+  </div>
+  <div class="kartica">
+    <h3>7. Promjene uvjeta</h3>
+    Uvjete možemo mijenjati; o bitnim promjenama korisnike obavještavamo na stranici ili porukom. Nastavak korištenja nakon promjene znači prihvaćanje novih uvjeta.
+  </div>
+  <button class="gumb tamni" onclick="idi('pocetna')">Natrag na početnu</button>
+</section>
+
+<script>
+  // ----- stanje demo-a -----
+  var posao = '';
+  var kad = '';
+  var nacin = 'gotovina'; // način plaćanja naručitelja
+  var cijena = 5;        // cijena naručitelja (piše na oglasu)
+  var ponuda = 6;        // protuponuda pomagača
+  var PRAG_UPOZORENJA = 5;   // demo: "drva u Zagrebu" — 90 % ljudi plati 5 € ili više
+  var CIJENA_OGLASA = 5;     // demo oglas "drva" u prikazu pomagača
+  var MAX_PROTU = 7.5;       // najviše +50 % (bez auta); s autom bi bilo +80 %
+
+  function fmt(n){
+    var s = (Math.round(n * 100) / 100).toFixed(2).replace('.', ',');
+    return s.slice(-3) === ',00' ? s.slice(0, -3) : s;
+  }
+  function placanjeTekst(iznos){
+    var kart = Math.round((iznos * 0.015 + 0.25) * 100) / 100;
+    if (nacin === 'kartica'){
+      return 'S vaše kartice skinut će se ' + fmt(iznos + 0.46 + kart) + ' € (' + fmt(iznos) +
+             ' € Ivanu + 0,46 € naknada Priskoči + ' + fmt(kart) +
+             ' € naknada za kartično plaćanje) tek kad potvrdite da je posao obavljen.';
+    }
+    return 'Platit ćete ' + fmt(iznos + 0.46) + ' € gotovinom kad posao bude gotov (' +
+           fmt(iznos) + ' € Ivanu + 0,46 € naknada Priskoči).';
+  }
+
+  function idi(id){
+    var ekrani = document.querySelectorAll('.ekran');
+    for (var i = 0; i < ekrani.length; i++) ekrani[i].classList.remove('aktivan');
+    document.getElementById(id).classList.add('aktivan');
+    var gumbi = document.querySelectorAll('.demobar button');
+    for (var j = 0; j < gumbi.length; j++) gumbi[j].classList.remove('aktivna');
+    var nav = {pocetna:'nav-pocetna', sigurnost:'nav-sigurnost', uvjeti:'nav-sigurnost', s2:'nav-oglasi'};
+    var navId = nav[id];
+    if (!navId){
+      if (id.slice(0, 2) === 'sr') navId = 'nav-reg';
+      else if (id.charAt(0) === 'p' || id === 'z1') navId = 'nav-p1';
+      else navId = 'nav-s1';
+    }
+    var g = document.getElementById(navId);
+    if (g) g.classList.add('aktivna');
+    if (id === 'pocetna') stisniPocetnu();
+    window.scrollTo(0, 0);
+  }
+
+  // početna uvijek stane na jedan ekran, bez klizača (demo traka zna biti u 2 reda)
+  function stisniPocetnu(){
+    var p = document.getElementById('pocetna');
+    if (!p.classList.contains('aktivan')) return;
+    var traka = document.querySelector('.demobar');
+    p.style.height = (window.innerHeight - traka.offsetHeight - 2) + 'px';
+  }
+  window.addEventListener('resize', stisniPocetnu);
+
+  // ----- put umirovljenika -----
+  function odaberiPosao(p){
+    posao = p;
+    document.getElementById('p2-posao').textContent = p;
+    idi('p2');
+  }
+  function pokaziSlobodniUpis(){
+    document.getElementById('slobodni-upis').style.display = 'block';
+    document.getElementById('opis').focus();
+  }
+  function demoOpis(){
+    document.getElementById('opis').value = 'ne radi mi svjetlo u hodniku i curi mi slavina u kupaonici';
+    pametniPomocnik();
+  }
+  function pametniPomocnik(){
+    document.getElementById('ai-odgovor').style.display = 'block';
+  }
+  function odaberiKad(k){
+    kad = k;
+    idi('p3');
+  }
+  function promijeniCijenu(d){
+    cijena = Math.max(1, cijena + d);
+    document.getElementById('cijena').textContent = cijena;
+    document.getElementById('upozorenje-cijena').style.display = 'none';
+    document.getElementById('p3-dalje').style.display = 'block';
+  }
+  function provjeriCijenu(){
+    if (cijena < PRAG_UPOZORENJA){
+      document.getElementById('up-posao').textContent = posao || 'Donošenje drva';
+      document.getElementById('upozorenje-cijena').style.display = 'block';
+      document.getElementById('p3-dalje').style.display = 'none';
+    } else {
+      nastaviNaPregled();
+    }
+  }
+  function povecajNa5(){
+    cijena = 5;
+    document.getElementById('cijena').textContent = cijena;
+    nastaviNaPregled();
+  }
+  function nastaviNaPregled(){
+    document.getElementById('upozorenje-cijena').style.display = 'none';
+    document.getElementById('p3-dalje').style.display = 'block';
+    document.getElementById('p4-posao').textContent = posao || 'Donošenje drva';
+    document.getElementById('p4-kad').textContent = kad || 'Danas';
+    document.getElementById('p4-cijena').textContent = cijena;
+    idi('p4');
+  }
+  function objavi(){
+    document.getElementById('ponuda-stigla').style.display = 'none';
+    document.getElementById('protu-stigla').style.display = 'none';
+    idi('p5');
+  }
+  function demoPrihvat(){
+    document.getElementById('protu-stigla').style.display = 'none';
+    document.getElementById('p5-dogovor').textContent = fmt(cijena);
+    document.getElementById('p5-kako').textContent = ' — prihvatio je vašu cijenu';
+    document.getElementById('p5-placanje').textContent = placanjeTekst(cijena);
+    document.getElementById('ponuda-stigla').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function demoProtu(){
+    document.getElementById('ponuda-stigla').style.display = 'none';
+    document.getElementById('p5-protu').textContent = fmt(cijena + 2);
+    document.getElementById('p5-protu2').textContent = fmt(cijena + 2);
+    document.getElementById('p5-cijena2').textContent = fmt(cijena);
+    document.getElementById('protu-stigla').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function prihvatiProtu(){
+    document.getElementById('protu-stigla').style.display = 'none';
+    document.getElementById('p5-dogovor').textContent = fmt(cijena + 2);
+    document.getElementById('p5-kako').textContent = ' — prihvatili ste njegovu protuponudu';
+    document.getElementById('p5-placanje').textContent = placanjeTekst(cijena + 2);
+    document.getElementById('ponuda-stigla').style.display = 'block';
+  }
+  function odbijProtu(){
+    document.getElementById('protu-stigla').style.display = 'none';
+  }
+  function odaberiNacin(n){
+    nacin = n;
+    var g = document.getElementById('btn-gotovina');
+    var k = document.getElementById('btn-kartica');
+    g.className = (n === 'gotovina') ? 'gumb' : 'gumb obrub';
+    k.className = (n === 'kartica') ? 'gumb' : 'gumb obrub';
+    document.getElementById('kartica-info').style.display = (n === 'kartica') ? 'block' : 'none';
+  }
+
+  // ----- put pomagača -----
+  function promijeniPonudu(d){
+    ponuda = Math.min(MAX_PROTU, Math.max(CIJENA_OGLASA + 0.5, ponuda + d));
+    document.getElementById('ponuda-iznos').textContent = fmt(ponuda);
+    document.getElementById('ponuda-dobio').style.display = 'none';
+    document.getElementById('protu-poslana').style.display = 'none';
+  }
+  function prihvatiOdmah(){
+    document.getElementById('protu-poslana').style.display = 'none';
+    document.getElementById('ponuda-dobio').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function posaljiProtuponudu(){
+    document.getElementById('ponuda-dobio').style.display = 'none';
+    document.getElementById('protu-iznos').textContent = fmt(ponuda);
+    document.getElementById('protu-poslana').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  // ----- registracije i oglasi -----
+  function birajJedan(b){
+    var braca = b.parentNode.querySelectorAll('button');
+    for (var i = 0; i < braca.length; i++) braca[i].classList.remove('da');
+    b.classList.add('da');
+  }
+  // ----- podrucja obavijesti: zupanije -> gradovi -> kvartovi -----
+  var ZUPANIJE = {
+    'Grad Zagreb': ['Zagreb'],
+    'Zagrebačka': ['Velika Gorica','Samobor','Zaprešić','Dugo Selo','Jastrebarsko'],
+    'Krapinsko-zagorska': ['Krapina','Zabok','Oroslavje'],
+    'Sisačko-moslavačka': ['Sisak','Petrinja','Kutina','Novska'],
+    'Karlovačka': ['Karlovac','Duga Resa','Ogulin','Slunj'],
+    'Varaždinska': ['Varaždin','Ivanec','Novi Marof','Ludbreg'],
+    'Koprivničko-križevačka': ['Koprivnica','Križevci','Đurđevac'],
+    'Bjelovarsko-bilogorska': ['Bjelovar','Daruvar','Čazma'],
+    'Primorsko-goranska': ['Rijeka','Opatija','Crikvenica','Krk','Delnice'],
+    'Ličko-senjska': ['Gospić','Senj','Otočac'],
+    'Virovitičko-podravska': ['Virovitica','Slatina','Orahovica'],
+    'Požeško-slavonska': ['Požega','Pakrac','Pleternica'],
+    'Brodsko-posavska': ['Slavonski Brod','Nova Gradiška'],
+    'Zadarska': ['Zadar','Biograd na Moru','Benkovac','Pag'],
+    'Osječko-baranjska': ['Osijek','Đakovo','Našice','Beli Manastir','Valpovo'],
+    'Šibensko-kninska': ['Šibenik','Knin','Vodice','Drniš'],
+    'Vukovarsko-srijemska': ['Vukovar','Vinkovci','Županja','Ilok'],
+    'Splitsko-dalmatinska': ['Split','Kaštela','Solin','Sinj','Makarska','Trogir'],
+    'Istarska': ['Pula','Poreč','Rovinj','Pazin','Umag','Labin'],
+    'Dubrovačko-neretvanska': ['Dubrovnik','Metković','Ploče','Korčula'],
+    'Međimurska': ['Čakovec','Prelog','Mursko Središće']
+  };
+  var KVARTOVI = {
+    'Zagreb': ['Donji grad','Gornji grad — Medveščak','Trešnjevka — sjever','Trešnjevka — jug','Maksimir','Novi Zagreb — istok','Novi Zagreb — zapad','Dubrava','Črnomerec','Trnje','Peščenica — Žitnjak','Stenjevec','Podsljeme','Sesvete'],
+    'Varaždin': ['Centar','Banfica','Jalkovec','Biškupec','Kućan'],
+    'Čakovec': ['Centar','Jug','Globetka','Mihovljan','Novo Selo Rok'],
+    'Karlovac': ['Zvijezda (centar)','Banija','Dubovac','Švarča','Grabrik','Drežnik — Hrnetić'],
+    'Velika Gorica': ['Centar','Pleso','Kurilovec','Galženica','Mraclinska Dubrava'],
+    'Osijek': ['Gornji grad','Donji grad','Tvrđa','Retfala','Jug II','Sjenjak'],
+    'Pula': ['Centar','Veruda','Stoja','Šijana','Monte Zaro','Vidikovac'],
+    'Rijeka': ['Centar — Korzo','Trsat','Zamet','Turnić','Kozala','Krnjevo','Vežica'],
+    'Zadar': ['Poluotok','Voštarnica','Borik','Diklo','Bili brig','Smiljevac'],
+    'Šibenik': ['Centar','Baldekin','Vidici','Šubićevac','Meterize'],
+    'Split': ['Varoš — centar','Bačvice','Blatine — Škrape','Bol','Split 3','Žnjan','Mejaši','Spinut'],
+    'Dubrovnik': ['Stari grad','Ploče','Lapad','Gruž','Montovjerna','Mokošica']
+  };
+  var zupOdabir = {'Grad Zagreb': true, 'Karlovačka': true};
+  var gradOdabir = {'Grad Zagreb|Zagreb': true, 'Karlovačka|Karlovac': true};
+  var kvartOdabir = {'Zagreb|Trešnjevka — jug': true, 'Zagreb|Maksimir': true, 'Karlovac|*': true};
+
+  function cip(txt, aktivan, onklik){
+    return '<button type="button" class="cip' + (aktivan ? ' da' : '') + '" onclick="' + onklik + '">' + txt + '</button>';
+  }
+  function klikZup(z){
+    if (zupOdabir[z]){
+      delete zupOdabir[z];
+      for (var k in gradOdabir) if (k.indexOf(z + '|') === 0){
+        var g = k.split('|')[1];
+        delete gradOdabir[k];
+        for (var kk in kvartOdabir) if (kk.indexOf(g + '|') === 0) delete kvartOdabir[kk];
+      }
+    } else zupOdabir[z] = true;
+    nacrtajPodrucja();
+  }
+  function klikGrad(z, g){
+    var k = z + '|' + g;
+    if (gradOdabir[k]){
+      delete gradOdabir[k];
+      for (var kk in kvartOdabir) if (kk.indexOf(g + '|') === 0) delete kvartOdabir[kk];
+    } else gradOdabir[k] = true;
+    nacrtajPodrucja();
+  }
+  function klikKvart(g, kv){
+    var k = g + '|' + kv;
+    if (kvartOdabir[k]) delete kvartOdabir[k]; else kvartOdabir[k] = true;
+    nacrtajPodrucja();
+  }
+  function nacrtajPodrucja(){
+    var h = '';
+    for (var z in ZUPANIJE) h += cip(z, !!zupOdabir[z], "klikZup('" + z + "')");
+    document.getElementById('zup-cipovi').innerHTML = h;
+
+    var hg = '', imaZup = false;
+    for (var z2 in ZUPANIJE){
+      if (!zupOdabir[z2]) continue;
+      imaZup = true;
+      hg += '<div class="skupina-ime">' + z2 + ' županija</div><div class="cipovi">';
+      hg += cip('Cijela županija', !!gradOdabir[z2 + '|*'], "klikGrad('" + z2 + "','*')");
+      var gradovi = ZUPANIJE[z2];
+      for (var i = 0; i < gradovi.length; i++)
+        hg += cip(gradovi[i], !!gradOdabir[z2 + '|' + gradovi[i]], "klikGrad('" + z2 + "','" + gradovi[i] + "')");
+      hg += '</div>';
+    }
+    document.getElementById('gradovi-dio').style.display = imaZup ? 'block' : 'none';
+    document.getElementById('grad-skupine').innerHTML = hg;
+
+    var hk = '', imaVeliki = false;
+    for (var k in gradOdabir){
+      var g2 = k.split('|')[1];
+      if (!KVARTOVI[g2]) continue;
+      imaVeliki = true;
+      hk += '<div class="skupina-ime">' + g2 + '</div><div class="cipovi">';
+      hk += cip('Cijeli grad', !!kvartOdabir[g2 + '|*'], "klikKvart('" + g2 + "','*')");
+      var kv = KVARTOVI[g2];
+      for (var j = 0; j < kv.length; j++)
+        hk += cip(kv[j], !!kvartOdabir[g2 + '|' + kv[j]], "klikKvart('" + g2 + "','" + kv[j] + "')");
+      hk += '</div>';
+    }
+    document.getElementById('kvartovi-dio').style.display = imaVeliki ? 'block' : 'none';
+    document.getElementById('kvart-skupine').innerHTML = hk;
+
+    var dijelovi = [];
+    for (var z3 in ZUPANIJE){
+      if (!zupOdabir[z3]) continue;
+      if (gradOdabir[z3 + '|*']) dijelovi.push('cijela ' + z3 + (z3 === 'Grad Zagreb' ? '' : ' županija'));
+      var gr = ZUPANIJE[z3];
+      for (var m = 0; m < gr.length; m++){
+        if (!gradOdabir[z3 + '|' + gr[m]]) continue;
+        var ime = gr[m];
+        if (KVARTOVI[ime]){
+          var kvs = [];
+          if (kvartOdabir[ime + '|*']) kvs.push('cijeli grad');
+          var sviKv = KVARTOVI[ime];
+          for (var n = 0; n < sviKv.length; n++)
+            if (kvartOdabir[ime + '|' + sviKv[n]]) kvs.push(sviKv[n]);
+          dijelovi.push(ime + (kvs.length ? ' (' + kvs.join(', ') + ')' : ''));
+        } else dijelovi.push(ime);
+      }
+    }
+    var saz = document.getElementById('podrucje-sazetak');
+    saz.style.display = dijelovi.length ? 'block' : 'none';
+    saz.innerHTML = '<b>Obavijesti stižu za:</b> ' + dijelovi.join('; ') + '.';
+  }
+  function demoKvacica(id){
+    document.getElementById(id).style.display = 'block';
+  }
+  function hrTocno(b, tocno){
+    if (tocno){
+      document.getElementById('sr4-ok').style.display = 'block';
+      b.style.borderColor = 'var(--tinta)';
+      b.style.color = 'var(--tinta)';
+    } else {
+      b.style.borderColor = 'var(--crvena)';
+      b.style.color = 'var(--crvena)';
+      b.textContent = 'Pokušaj ponovno';
+    }
+  }
+  function pokaziKod(){
+    document.getElementById('kod-dio').style.display = 'block';
+  }
+  function velikaSlova(){
+    document.body.classList.toggle('velika');
+    var ima = document.body.classList.contains('velika');
+    var svi = document.querySelectorAll('.gumb-slova');
+    for (var i = 0; i < svi.length; i++) svi[i].textContent = ima ? 'Obična slova' : 'Veća slova';
+  }
+  function filtriraj(){
+    var v = document.getElementById('f-vrsta').value;
+    var m = document.getElementById('f-mjesto').value;
+    var samoAuto = document.getElementById('f-auto').checked;
+    var oglasi = document.querySelectorAll('.oglas');
+    var vidljivih = 0;
+    for (var i = 0; i < oglasi.length; i++){
+      var o = oglasi[i];
+      var ok = (!v || o.getAttribute('data-vrsta') === v) &&
+               (!m || o.getAttribute('data-mjesto') === m) &&
+               (!samoAuto || o.getAttribute('data-auto') === '1');
+      o.style.display = ok ? 'block' : 'none';
+      if (ok) vidljivih++;
+    }
+    document.getElementById('nema-oglasa').style.display = vidljivih ? 'none' : 'block';
+  }
+
+  nacrtajPodrucja();
+  idi('pocetna');
+</script>
+</body>
+</html>

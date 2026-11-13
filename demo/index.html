@@ -136,6 +136,7 @@
   .kvacica{font-family:Arial,sans-serif;font-size:14px;display:flex;align-items:center;gap:7px;cursor:pointer;}
   .kvacica input{width:19px;height:19px;}
   .tagic{display:inline-block;border:1px solid var(--crvena);color:var(--crvena);font-family:Arial,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 9px;margin-left:8px;vertical-align:middle;}
+  .tagic.kuca{border-color:#1f4e79;color:#1f4e79;}
 
   /* izbor jednog od ponudenih (da/ne, odnos) */
   .dane{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 16px;}
@@ -226,7 +227,7 @@
     <div>
       <div class="kicker">Pomoć u tvom kvartu</div>
       <h1 class="naslov" style="font-family:Georgia,serif">Kad obitelj nije blizu, dobri ljudi priskaču.</h1>
-      <p class="uvodni">Umirovljenik objavi što treba — drva, žarulju, namirnice — do kada i koliko plaća. Provjereni pomagač iz kvarta prihvati posao jednim pritiskom. Ako je cijena preniska, smije ponuditi najviše pola više, a odluka je uvijek naručiteljeva.</p>
+      <p class="uvodni">Umirovljenik objavi što treba — drva, žarulju, namirnice — do kada i koliko plaća. Provjereni pomagači iz kvarta dobrovoljno se jave, a naručitelj odabere kome vjeruje. U dom se ulazi samo uz izričito odobrenje.</p>
       <button class="gumb glina" onclick="idi('p1')">Trebam pomoć</button>
       <button class="gumb tamni" onclick="idi('s1')">&Zcaron;elim pomoći</button>
       <button class="gumb obrub" onclick="idi('z1')">Trebam pomoć za nekoga</button>
@@ -318,7 +319,7 @@
   <button class="nazad" onclick="idi('p2')">Natrag</button>
   <div class="korak">Korak 3 od 4</div>
   <h2>Koliko plaćate?</h2>
-  <p>Cijena <b>piše na oglasu</b>. Posao dobiva prvi pomagač koji je prihvati. Ako je cijena preniska, pomagač može poslati protuponudu — najviše <b>50 % veću</b> (kod poslova s autom do 80 %) — a vi je možete prihvatiti ili odbiti.</p>
+  <p>Cijena <b>piše na oglasu</b>. Pomagači koji žele posao sami se jave, a vi odaberete kome ga dajete. Nema cjenkanja — tko se javi, pristaje na vašu cijenu.</p>
 
   <div class="cijena-red">
     <button onclick="promijeniCijenu(-1)">&minus;</button>
@@ -355,16 +356,22 @@
     <div class="meta" style="margin:5px 0">Cijena: <b><span id="p4-cijena"></span> &euro;</b> <span class="tko tko-svi">piše na oglasu</span></div>
     <div class="meta" style="margin:5px 0">Točna adresa: Trešnjevačka 00, 1. kat <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
     <div class="meta" style="margin:5px 0">Vaš mobitel: 098 000 0000 <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
-    <div class="meta" style="margin:5px 0">Pristigle protuponude <span class="tko tko-n">vidite samo vi</span></div>
+    <div class="meta" style="margin:5px 0">Pristigle prijave pomagača <span class="tko tko-n">vidite samo vi</span></div>
   </div>
+  <p style="font-size:22px;font-weight:600;margin-bottom:4px">Mora li pomagač ući u stan?</p>
+  <div class="dane">
+    <button class="da" onclick="birajJedan(this)">Ne — sve je do vrata</button>
+    <button onclick="birajJedan(this)">Da — smije ući</button>
+  </div>
+  <div class="malitekst" style="margin-top:-8px;margin-bottom:12px">Ako odaberete „Da", oglas nosi oznaku <span class="tagic kuca" style="margin-left:4px">u kući</span> i vi <b>izričito odobravate ulazak</b> pomagaču kojeg odaberete. Pomagač koji je kod vas već obavio 3 posla izvan kuće smatra se poznatim.</div>
   <p style="font-size:22px;font-weight:600;margin-bottom:4px">Kako ćete platiti?</p>
   <div class="gumbred">
     <button class="gumb" id="btn-gotovina" onclick="odaberiNacin('gotovina')">Gotovinom</button>
     <button class="gumb obrub" id="btn-kartica" onclick="odaberiNacin('kartica')">Karticom</button>
   </div>
-  <div class="malitekst" id="kartica-info" style="display:none">Kod plaćanja karticom dodaje se naknada za kartično plaćanje (na ovakav posao oko 0,32 &euro;) i nju plaćate vi. Pomagač uvijek dobije puni dogovoreni iznos. Novac se skida s kartice tek kad potvrdite da je posao obavljen. Zgodno ako oglas plaća obitelj iz daljine.</div>
+  <div class="malitekst" id="kartica-info" style="display:none">Kod plaćanja karticom ili mobilnim bankarstvom naknadu Priskoči (0,46 &euro;) i naknadu za kartično plaćanje plaćate <b>vi</b> — posao od 5 &euro; znači 5,46 &euro; + kartična naknada. Pomagač dobije puni dogovoreni iznos, a novac se skida tek kad potvrdite da je posao obavljen. Možete i <b>nadoplatiti svoj račun</b> (npr. 5 &euro;) pa se sve skida s njega. Zgodno ako oglas plaća obitelj iz daljine.</div>
   <div class="malitekst" style="margin-top:10px">Oglas može objaviti i netko iz obitelji umjesto vas — sa svog računa, u vaše ime.</div>
-  <div class="malitekst" style="margin-top:6px">Provjereni pomagači s dokumentom &middot; protuponude su ograničene (najviše +50 %, s autom +80 %) &middot; uz dogovorenu cijenu ide naknada Priskoči od 0,46 &euro;.</div>
+  <div class="malitekst" style="margin-top:6px">Provjereni pomagači s dokumentom &middot; posao nastaje tek kad vi odobrite prijavu &middot; kod gotovine naknadu Priskoči (0,46 &euro;) plaća pomagač, pa vi plaćate točno dogovorenu cijenu.</div>
   <button class="gumb glina" onclick="idi('pr1')">Objavi oglas</button>
 </section>
 
@@ -399,21 +406,20 @@
     <img src="../slike/predaja.jpg" alt="Volonterka predaje vrećicu s namirnicama gospodinu">
     <figcaption>Pomoć je stigla na vrata — s osmijehom. (arhiva Priskoči)</figcaption>
   </figure>
-  <div class="info">Čim netko prihvati vašu cijenu ili pošalje protuponudu, mi vas <b>nazovemo ili pošaljemo SMS</b>. Ne morate ništa više raditi.</div>
+  <div class="info">Pomagači koji žele vaš posao <b>dobrovoljno se jave</b> na oglas. Čim stigne prijava, mi vas <b>nazovemo ili pošaljemo SMS</b> — a vi odlučite kome dajete posao.</div>
   <div class="gumbred">
-    <button class="gumb obrub" onclick="demoPrihvat()">(demo) Netko prihvati vašu cijenu</button>
-    <button class="gumb obrub" onclick="demoProtu()">(demo) Netko ponudi više</button>
+    <button class="gumb obrub" onclick="demoPrijava()">(demo) Javio se pomagač</button>
   </div>
 
-  <div id="protu-stigla" style="display:none">
+  <div id="prijava-stigla" style="display:none">
     <div class="upozorenje">
-      <b>Stigla je protuponuda.</b> <span class="tko tko-n">vidite samo vi</span><br>
-      Ivan nudi <b><span id="p5-protu"></span> &euro;</b> (vaša cijena <span id="p5-cijena2"></span> &euro; + 2 &euro;) uz poruku: <i>„Drva su na prvom katu bez lifta, treba više tura."</i>
+      <b>Javio se pomagač.</b> <span class="tko tko-n">vidite samo vi</span><br>
+      Ivan K., 21 — student <span class="znacka">Provjeren</span> &middot; 37 obavljenih poslova &middot; 5 pisanih pohvala &middot; pristaje na vašu cijenu.
       <div class="gumbred" style="margin-top:12px">
-        <button class="gumb" onclick="prihvatiProtu()">Prihvati <span id="p5-protu2"></span> &euro;</button>
-        <button class="gumb tamni" onclick="odbijProtu()">Odbij — čekam drugoga</button>
+        <button class="gumb" onclick="odobriIvana()">Daj posao Ivanu</button>
+        <button class="gumb tamni" onclick="document.getElementById('prijava-stigla').style.display='none'">Pričekat ću još prijava</button>
       </div>
-      <div class="malitekst" style="margin-top:8px">Protuponuda smije biti najviše 50 % iznad vaše cijene (kod poslova s autom do 80 %). Ako je odbijete, oglas ostaje objavljen.</div>
+      <div class="malitekst" style="margin-top:8px">Nitko ne dobiva posao dok vi ne odaberete. Oglas dotad ostaje objavljen.</div>
     </div>
   </div>
 
@@ -551,7 +557,7 @@
   <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
   <button class="nazad" onclick="idi('s1')">Natrag</button>
   <h2>Oglasi u tvojoj blizini</h2>
-  <p class="malitekst">Cijena naručitelja piše na svakom oglasu — <b>prvi koji je prihvati dobiva posao</b>. Misliš da je prenisko? Pošalji protuponudu: najviše +50 %, kod poslova s autom do +80 %.</p>
+  <p class="malitekst">Cijena naručitelja piše na svakom oglasu. <b>Javi se</b> na posao koji ti odgovara — naručitelj od prijavljenih bira kome vjeruje. Oglasi s oznakom <span class="tagic kuca" style="margin-left:2px">u kući</span> traže ulazak u dom: naručitelj ga izričito odobrava.</p>
 
   <div class="filtri">
     <select id="f-vrsta" onchange="filtriraj()">
@@ -584,8 +590,7 @@
       <div class="cijena-oglas">5 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -600,8 +605,7 @@
       <div class="cijena-oglas">6 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -616,8 +620,7 @@
       <div class="cijena-oglas">15 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -625,7 +628,7 @@
     <div class="red" style="align-items:flex-start">
       <div class="ogl-ik"><svg><use href="#ic-ljekarna"/></svg></div>
       <div style="flex:1">
-        <h3 style="margin-top:0">Podići lijekove u ljekarni, nanijeti drva za tjedan na 2. kat i zamijeniti žarulju</h3>
+        <h3 style="margin-top:0">Podići lijekove u ljekarni, nanijeti drva za tjedan na 2. kat i zamijeniti žarulju<span class="tagic kuca">u kući</span></h3>
         <div class="meta">Zagreb — Trešnjevka &middot; objavljeno danas u 13:55 &middot; obaviti do: <b>sutra prijepodne</b></div>
         <div class="meta procjena">procjena trajanja: oko 65 min s autom &middot; oko 80 min pješice</div>
         <div class="malitekst">Izračun: najbliža otvorena ljekarna 450 m (~15 min) + drva ~8 tura košarom na 2. kat (~35 min) + žarulja (~10 min). Raspon 1–2 h → pišemo donji rub.</div>
@@ -633,8 +636,7 @@
       <div class="cijena-oglas">12 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -642,15 +644,14 @@
     <div class="red" style="align-items:flex-start">
       <div class="ogl-ik"><svg><use href="#ic-zarulja"/></svg></div>
       <div style="flex:1">
-        <h3 style="margin-top:0">Zamjena dvije žarulje i popravak slavine</h3>
+        <h3 style="margin-top:0">Zamjena dvije žarulje i popravak slavine<span class="tagic kuca">u kući</span></h3>
         <div class="meta">Zagreb — Maksimir &middot; objavljeno jučer u 19:30 &middot; obaviti do: <b>nedjelje</b></div>
         <div class="meta procjena">procjena trajanja: oko 35 min</div>
       </div>
       <div class="cijena-oglas">6 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -665,8 +666,7 @@
       <div class="cijena-oglas">25 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -681,8 +681,7 @@
       <div class="cijena-oglas">7 &euro;</div>
     </div>
     <div class="gumbred" style="margin-top:4px">
-      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3');prihvatiOdmah()">Prihvati</button>
-      <button class="gumb obrub" style="font-size:13px;padding:13px" onclick="idi('s3')">Pošalji protuponudu</button>
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
     </div>
   </div>
 
@@ -703,30 +702,31 @@
     <div class="cijena-oglas">5 &euro;</div>
   </div>
 
-  <button class="gumb glina" onclick="prihvatiOdmah()">Prihvati posao za 5 &euro;</button>
+  <div class="info" style="margin-top:14px">
+    Javi se ako želiš ovaj posao za <b>5 &euro;</b>. Naručiteljica vidi tvoju prijavu i profil pa odlučuje kome daje posao. <b>Ništa ne plaćaš dok posao nije dogovoren.</b>
+  </div>
+  <button class="gumb glina" onclick="javiSe()">Javi se za ovaj posao</button>
 
-  <div class="info" style="margin-top:20px">
-    Misliš da je 5 &euro; premalo za ovaj posao? Pošalji <b>protuponudu</b> — najviše <b>7,50 &euro;</b> (50 % iznad cijene; za poslove s oznakom „treba auto" do 80 % iznad). Naručitelj je može prihvatiti ili odbiti.
+  <div id="prijava-poslana" class="uspjeh" style="display:none">
+    <b>Prijava je poslana.</b> Ako te naručiteljica odabere, stiže ti SMS — i tek tada se naplaćuje naknada Priskoči (0,46 &euro;).
+    <button class="gumb obrub" onclick="demoOdobren()">(demo) Naručiteljica te odabrala</button>
   </div>
-  <label style="font-size:22px;font-weight:600">Tvoja protuponuda</label>
-  <div class="cijena-red">
-    <button onclick="promijeniPonudu(-0.5)">&minus;</button>
-    <div class="iznos"><span id="ponuda-iznos">6</span> &euro;</div>
-    <button onclick="promijeniPonudu(0.5)">+</button>
+
+  <div id="naplata" class="upozorenje" style="display:none">
+    <b>Posao je dogovoren — prije posla plati naknadu Priskoči: 0,46 &euro;.</b><br>
+    Dok naknada nije plaćena, aplikacija je zaključana (ne vidiš adresu ni nove oglase).
+    <div class="gumbred" style="margin-top:12px">
+      <button class="gumb" onclick="platiNaknadu()">Plati 0,46 &euro;</button>
+      <button class="gumb tamni" onclick="platiNaknadu()">Skini s mog računa (saldo 4,08 &euro;)</button>
+    </div>
+    <div class="malitekst" style="margin-top:8px">Na „Moji poslovi" možeš nadoplatiti račun (npr. 5 &euro;) pa se naknada ubuduće skida sama. Ako naručitelj plaća karticom, naknadu plaća on — tebi se ništa ne naplaćuje. Ako posao otpadne bez tvoje krivnje, naknadu vraćamo na tvoj račun.</div>
   </div>
-  <div class="malitekst" style="text-align:center">Naknadu Priskoči (0,46 &euro;) plaća naručitelj — tebi se ništa ne naplaćuje.</div>
-  <button class="gumb" onclick="posaljiProtuponudu()">Pošalji protuponudu</button>
 
   <div id="ponuda-dobio" class="uspjeh" style="display:none">
-    <b>Posao je tvoj za 5 &euro;!</b> Prvi si prihvatio cijenu naručitelja.<br><br>
+    <b>Naknada plaćena — posao je tvoj za 5 &euro;!</b><br><br>
     <b style="color:#1f4e79">Adresa: Trešnjevačka 00, 1. kat &middot; Kontakt: Marija H. (072 xxx xxx)</b> <span class="tko tko-p">vidiš samo ti — posao je tvoj</span><br>
-    <span class="malitekst">Naručitelj plaća gotovinom na licu mjesta ili karticom kroz aplikaciju (piše u detaljima posla) — u oba slučaja ti dobiješ puni dogovoreni iznos; naknadu Priskoči (0,46 &euro;) plaća naručitelj.</span>
+    <span class="malitekst">Naručiteljica plaća gotovinom na licu mjesta — dobivaš punih 5 &euro;.</span>
     <button class="gumb tamni" onclick="idi('s4')">Moji poslovi</button>
-  </div>
-
-  <div id="protu-poslana" class="upozorenje" style="display:none">
-    <b>Protuponuda od <span id="protu-iznos"></span> &euro; je poslana naručitelju.</b><br>
-    Ako je prihvati, posao je tvoj — javimo ti SMS-om. Dok on odlučuje, posao svejedno može uzeti netko tko prihvati 5 &euro;.
   </div>
 </section>
 
@@ -738,7 +738,16 @@
   <div class="kartica">
     <h3>Ovaj mjesec</h3>
     <div style="font-family:'Playfair Display',Georgia,serif;font-size:36px;font-weight:700">87,50 &euro; zarađeno</div>
-    <div class="meta">14 obavljenih poslova &middot; 5 pisanih pohvala &middot; bez ikakvih naknada</div>
+    <div class="meta">14 obavljenih poslova &middot; 5 pisanih pohvala</div>
+  </div>
+  <div class="kartica">
+    <h3>Moj račun</h3>
+    <div class="meta">Saldo: <b>4,08 &euro;</b> — s njega se sama skida naknada 0,46 &euro; kad dogovoriš posao (kod gotovinskih poslova; kod kartičnih je plaća naručitelj).</div>
+    <div class="gumbred" style="margin-top:10px">
+      <button class="gumb obrub" style="min-width:140px">Nadoplati 5 &euro;</button>
+      <button class="gumb obrub" style="min-width:140px">Nadoplati 10 &euro;</button>
+    </div>
+    <div class="malitekst" style="margin-top:6px">Nadoplata nije obavezna — naknadu možeš platiti i svaki put posebno. Nakon trećeg obavljenog posla samo te jednom pitamo želiš li nadoplatu, da ti bude brže.</div>
   </div>
   <div class="kartica">
     <h3>Donijeti drva — danas u 16 h</h3>
@@ -764,8 +773,13 @@
   </div>
 
   <div class="kartica">
-    <h3>Cijena i protuponude</h3>
-    Cijena naručitelja <b>piše na oglasu</b> — prvi pomagač koji je prihvati dobiva posao, odmah. Ako je cijena preniska, pomagač može poslati <b>protuponudu</b>: najviše <b>50 % iznad</b> cijene, a kod poslova s autom (vožnja, udaljenija mjesta) <b>do 80 % iznad</b>. Naručitelj je može prihvatiti ili odbiti; dok odlučuje, oglas ostaje objavljen. Na svakom oglasu piše i <b>kad je objavljen</b> i <b>do kada posao mora biti obavljen</b>.
+    <h3>Cijena i prijave</h3>
+    Cijena naručitelja <b>piše na oglasu</b>. Pomagači koji žele posao <b>dobrovoljno se jave</b>, a naručitelj od prijavljenih odabere kome vjeruje — tek tada je posao dogovoren. Nema cjenkanja ni nadmetanja. Na svakom oglasu piše i <b>kad je objavljen</b> i <b>do kada posao mora biti obavljen</b>.
+  </div>
+
+  <div class="kartica">
+    <h3>U kući ili izvan kuće?</h3>
+    Svaki posao je ili <b>izvan kuće / do vrata</b> (drva do vrata, dućan, ljekarna, dvorište, prijevoz) ili nosi oznaku <span class="tagic kuca" style="margin-left:0">u kući</span> (čišćenje, žarulja, slavina...). U dom se ulazi <b>samo uz izričito odobrenje naručitelja</b> — daje ga kad odabere pomagača. Pomagač koji je kod istog naručitelja već obavio <b>3 posla izvan kuće</b> smatra se poznatim; naručitelju to i pokažemo („Ivan je kod vas već bio 3 puta").
   </div>
 
   <div class="kartica">
@@ -780,12 +794,12 @@
 
   <div class="kartica">
     <h3>Kako se plaća posao?</h3>
-    Na izbor naručitelja: <b>gotovinom</b> izravno pomagaču kad je posao gotov, ili <b>karticom kroz aplikaciju</b> (zgodno kad oglas plaća obitelj iz daljine). Kod kartice se dodaje naknada za kartično plaćanje i <b>nju plaća naručitelj</b> — pomagač u oba slučaja dobije puni dogovoreni iznos. Novac se s kartice skida tek kad naručitelj potvrdi da je posao obavljen.
+    Na izbor naručitelja: <b>gotovinom</b> izravno pomagaču kad je posao gotov — tada naknadu Priskoči (0,46 &euro;) plaća <b>pomagač</b>, a naručitelj plaća točno dogovorenu cijenu; ili <b>karticom / mobilnim bankarstvom kroz aplikaciju</b> (zgodno kad plaća obitelj iz daljine) — tada naknadu plaća <b>naručitelj</b> (posao od 5 &euro; = 5,46 &euro; + kartična naknada), a novac se skida tek kad potvrdi da je posao obavljen. I pomagač i naručitelj mogu <b>nadoplatiti svoj račun</b> (npr. 5 &euro;) pa se naknada skida sama.
   </div>
 
   <div class="kartica">
     <h3>Od čega živi Priskoči?</h3>
-    <b>0,46 &euro; po dogovorenom poslu — plaća naručitelj</b>, jednostavno se doda na dogovorenu cijenu. Objava oglasa je besplatna, gledanje oglasa je besplatno, neuspješne ponude su besplatne, a <b>pomagač ne plaća ništa</b>. Kod kartice se naknada naplati automatski zajedno s cijenom; kod gotovine pomagač je ubire uz cijenu i prosljeđuje platformi.
+    <b>0,46 &euro; po dogovorenom poslu.</b> Naplaćuje se u trenutku kad naručitelj odobri pomagača: kod gotovine je plaća <b>pomagač</b> (aplikacija mu je zaključana dok je ne plati — ili se sama skine s njegova salda), kod kartice je plaća <b>naručitelj</b> uz cijenu posla. Objava oglasa, gledanje oglasa i prijave su besplatni. Ako dogovoreni posao otpadne bez krivnje platitelja, naknada se vraća na njegov račun.
   </div>
 
   <div class="kartica">
@@ -806,7 +820,7 @@
   <div class="kartica">
     <h3>Tko što vidi?</h3>
     <div class="meta" style="margin:7px 0">Opis posla, kvart, rok, cijena i profil pomagača <span class="tko tko-svi">vide svi</span></div>
-    <div class="meta" style="margin:7px 0">Pristigle protuponude <span class="tko tko-n">samo naručitelj</span></div>
+    <div class="meta" style="margin:7px 0">Pristigle prijave pomagača <span class="tko tko-n">samo naručitelj</span></div>
     <div class="meta" style="margin:7px 0">Točna adresa i brojevi telefona <span class="tko tko-p">samo pomagač koji dobije posao</span></div>
     <div class="meta" style="margin:7px 0">Dokumenti pomagača (osobna, vozačka) <span class="tko tko-t">samo naš tim</span></div>
   </div>
@@ -839,7 +853,7 @@
   </div>
   <div class="kartica">
     <h3>5. Naknada</h3>
-    Naknada iznosi 0,46 € po dogovorenom poslu i plaća je naručitelj — dodaje se na dogovorenu cijenu. Kod kartičnog plaćanja naručitelj plaća i naknadu kartičnog procesora. Objava oglasa, razgledavanje i slanje ponuda su besplatni.
+    Naknada iznosi 0,46 € po dogovorenom poslu i naplaćuje se u trenutku dogovora. Kod gotovinskog plaćanja plaća je pomagač (do plaćanja mu je korištenje zaključano); kod kartičnog plaćanja plaća je naručitelj, uz naknadu kartičnog procesora. Objava oglasa, razgledavanje i prijave su besplatni. Ako dogovoreni posao otpadne bez krivnje platitelja, naknada se vraća na njegov račun.
   </div>
   <div class="kartica">
     <h3>6. Sporovi među korisnicima</h3>
@@ -858,10 +872,7 @@
   var kad = '';
   var nacin = 'gotovina'; // način plaćanja naručitelja
   var cijena = 5;        // cijena naručitelja (piše na oglasu)
-  var ponuda = 6;        // protuponuda pomagača
   var PRAG_UPOZORENJA = 5;   // demo: "drva u Zagrebu" — 90 % ljudi plati 5 € ili više
-  var CIJENA_OGLASA = 5;     // demo oglas "drva" u prikazu pomagača
-  var MAX_PROTU = 7.5;       // najviše +50 % (bez auta); s autom bi bilo +80 %
 
   function fmt(n){
     var s = (Math.round(n * 100) / 100).toFixed(2).replace('.', ',');
@@ -874,8 +885,7 @@
              ' € Ivanu + 0,46 € naknada Priskoči + ' + fmt(kart) +
              ' € naknada za kartično plaćanje) tek kad potvrdite da je posao obavljen.';
     }
-    return 'Platit ćete ' + fmt(iznos + 0.46) + ' € gotovinom kad posao bude gotov (' +
-           fmt(iznos) + ' € Ivanu + 0,46 € naknada Priskoči).';
+    return 'Platit ćete Ivanu ' + fmt(iznos) + ' € gotovinom kad posao bude gotov. Naknadu Priskoči (0,46 €) plaća Ivan — vama se ništa ne dodaje.';
   }
 
   function idi(id){
@@ -957,34 +967,21 @@
   }
   function objavi(){
     document.getElementById('ponuda-stigla').style.display = 'none';
-    document.getElementById('protu-stigla').style.display = 'none';
+    document.getElementById('prijava-stigla').style.display = 'none';
     idi('p5');
   }
-  function demoPrihvat(){
-    document.getElementById('protu-stigla').style.display = 'none';
+  function demoPrijava(){
+    document.getElementById('ponuda-stigla').style.display = 'none';
+    document.getElementById('prijava-stigla').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function odobriIvana(){
+    document.getElementById('prijava-stigla').style.display = 'none';
     document.getElementById('p5-dogovor').textContent = fmt(cijena);
-    document.getElementById('p5-kako').textContent = ' — prihvatio je vašu cijenu';
+    document.getElementById('p5-kako').textContent = ' — vi ste ga odabrali';
     document.getElementById('p5-placanje').textContent = placanjeTekst(cijena);
     document.getElementById('ponuda-stigla').style.display = 'block';
     window.scrollTo(0, document.body.scrollHeight);
-  }
-  function demoProtu(){
-    document.getElementById('ponuda-stigla').style.display = 'none';
-    document.getElementById('p5-protu').textContent = fmt(cijena + 2);
-    document.getElementById('p5-protu2').textContent = fmt(cijena + 2);
-    document.getElementById('p5-cijena2').textContent = fmt(cijena);
-    document.getElementById('protu-stigla').style.display = 'block';
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-  function prihvatiProtu(){
-    document.getElementById('protu-stigla').style.display = 'none';
-    document.getElementById('p5-dogovor').textContent = fmt(cijena + 2);
-    document.getElementById('p5-kako').textContent = ' — prihvatili ste njegovu protuponudu';
-    document.getElementById('p5-placanje').textContent = placanjeTekst(cijena + 2);
-    document.getElementById('ponuda-stigla').style.display = 'block';
-  }
-  function odbijProtu(){
-    document.getElementById('protu-stigla').style.display = 'none';
   }
   function odaberiNacin(n){
     nacin = n;
@@ -996,21 +993,17 @@
   }
 
   // ----- put pomagača -----
-  function promijeniPonudu(d){
-    ponuda = Math.min(MAX_PROTU, Math.max(CIJENA_OGLASA + 0.5, ponuda + d));
-    document.getElementById('ponuda-iznos').textContent = fmt(ponuda);
-    document.getElementById('ponuda-dobio').style.display = 'none';
-    document.getElementById('protu-poslana').style.display = 'none';
-  }
-  function prihvatiOdmah(){
-    document.getElementById('protu-poslana').style.display = 'none';
-    document.getElementById('ponuda-dobio').style.display = 'block';
+  function javiSe(){
+    document.getElementById('prijava-poslana').style.display = 'block';
     window.scrollTo(0, document.body.scrollHeight);
   }
-  function posaljiProtuponudu(){
-    document.getElementById('ponuda-dobio').style.display = 'none';
-    document.getElementById('protu-iznos').textContent = fmt(ponuda);
-    document.getElementById('protu-poslana').style.display = 'block';
+  function demoOdobren(){
+    document.getElementById('naplata').style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function platiNaknadu(){
+    document.getElementById('naplata').style.display = 'none';
+    document.getElementById('ponuda-dobio').style.display = 'block';
     window.scrollTo(0, document.body.scrollHeight);
   }
 

@@ -369,9 +369,9 @@
     <button class="gumb" id="btn-gotovina" onclick="odaberiNacin('gotovina')">Gotovinom</button>
     <button class="gumb obrub" id="btn-kartica" onclick="odaberiNacin('kartica')">Karticom</button>
   </div>
-  <div class="malitekst" id="kartica-info" style="display:none">Kod plaćanja karticom ili mobilnim bankarstvom naknadu Priskoči (0,46 &euro;) i naknadu za kartično plaćanje plaćate <b>vi</b> — posao od 5 &euro; znači 5,46 &euro; + kartična naknada. Pomagač dobije puni dogovoreni iznos, a novac se skida tek kad potvrdite da je posao obavljen. Možete i <b>nadoplatiti svoj račun</b> (npr. 5 &euro;) pa se sve skida s njega. Zgodno ako oglas plaća obitelj iz daljine.</div>
+  <div class="malitekst" id="kartica-info" style="display:none">Kod plaćanja karticom ili mobilnim bankarstvom novac ide <b>izravno pomagaču</b> i skida se tek kad potvrdite da je posao obavljen. Plaćate <b>točno dogovorenu cijenu</b> — bez ikakvih dodataka. Zgodno ako oglas plaća obitelj iz daljine.</div>
   <div class="malitekst" style="margin-top:10px">Oglas može objaviti i netko iz obitelji umjesto vas — sa svog računa, u vaše ime.</div>
-  <div class="malitekst" style="margin-top:6px">Provjereni pomagači s dokumentom &middot; posao nastaje tek kad vi odobrite prijavu &middot; kod gotovine naknadu Priskoči (0,46 &euro;) plaća pomagač, pa vi plaćate točno dogovorenu cijenu.</div>
+  <div class="malitekst" style="margin-top:6px">Provjereni pomagači s dokumentom &middot; posao nastaje tek kad vi odobrite prijavu &middot; naknadu Priskoči (0,46 &euro;) uvijek plaća pomagač — vi plaćate točno dogovorenu cijenu.</div>
   <button class="gumb glina" onclick="idi('pr1')">Objavi oglas</button>
 </section>
 
@@ -557,7 +557,7 @@
   <div class="glava-mala"><span onclick="idi('pocetna')">prisko&ccaron;i.hr</span></div>
   <button class="nazad" onclick="idi('s1')">Natrag</button>
   <h2>Oglasi u tvojoj blizini</h2>
-  <p class="malitekst">Cijena naručitelja piše na svakom oglasu. <b>Javi se</b> na posao koji ti odgovara — naručitelj od prijavljenih bira kome vjeruje. Oglasi s oznakom <span class="tagic kuca" style="margin-left:2px">u kući</span> traže ulazak u dom: naručitelj ga izričito odobrava.</p>
+  <p class="malitekst">Cijena naručitelja piše na svakom oglasu. <b>Javi se</b> na posao koji ti odgovara — naručitelj od prijavljenih bira kome vjeruje. Oglasi s oznakom <span class="tagic kuca" style="margin-left:2px">u kući</span> traže ulazak u dom: naručitelj ga izričito odobrava. Oglasi kojima je <b>rok prošao</b> stoje na vrhu — pomoć im najviše treba.</p>
 
   <div class="filtri">
     <select id="f-vrsta" onchange="filtriraj()">
@@ -578,6 +578,21 @@
     <button class="gumb obrub gumb-slova" style="width:auto;margin:0" onclick="velikaSlova()">Veća slova</button>
   </div>
   <p class="malitekst" style="margin-top:-4px">Starijim naručiteljima stranica se sama otvara s velikim slovima — gumb je tu da vidiš kako to izgleda.</p>
+
+  <div class="kartica oglas" data-vrsta="ducan" data-mjesto="zagreb" data-auto="0" style="border-left:6px solid var(--crvena)">
+    <div class="red" style="align-items:flex-start">
+      <div class="ogl-ik"><svg><use href="#ic-ducan"/></svg></div>
+      <div style="flex:1">
+        <h3 style="margin-top:0">Donijeti kruh, mlijeko i osnovne namirnice<span class="tagic">rok prošao</span></h3>
+        <div class="meta">Zagreb — Trnje &middot; objavljeno prekjučer u 16:10 &middot; rok je bio: <b>jučer 18 h</b> — još se nitko nije javio</div>
+        <div class="meta procjena">procjena trajanja: oko 30 min</div>
+      </div>
+      <div class="cijena-oglas">4 &euro;</div>
+    </div>
+    <div class="gumbred" style="margin-top:4px">
+      <button class="gumb" style="font-size:14px;padding:13px" onclick="idi('s3')">Javi se za ovaj posao</button>
+    </div>
+  </div>
 
   <div class="kartica oglas" data-vrsta="drva" data-mjesto="zagreb" data-auto="0">
     <div class="red" style="align-items:flex-start">
@@ -708,24 +723,15 @@
   <button class="gumb glina" onclick="javiSe()">Javi se za ovaj posao</button>
 
   <div id="prijava-poslana" class="uspjeh" style="display:none">
-    <b>Prijava je poslana.</b> Ako te naručiteljica odabere, stiže ti SMS — i tek tada se naplaćuje naknada Priskoči (0,46 &euro;).
+    <b>Prijava je poslana.</b> Možeš je besplatno povući dok te naručiteljica ne odabere. Ako te odabere, stiže ti SMS — i s računa ti se skida naknada Priskoči (0,46 &euro;).
     <button class="gumb obrub" onclick="demoOdobren()">(demo) Naručiteljica te odabrala</button>
   </div>
 
-  <div id="naplata" class="upozorenje" style="display:none">
-    <b>Posao je dogovoren — prije posla plati naknadu Priskoči: 0,46 &euro;.</b><br>
-    Dok naknada nije plaćena, aplikacija je zaključana (ne vidiš adresu ni nove oglase).
-    <div class="gumbred" style="margin-top:12px">
-      <button class="gumb" onclick="platiNaknadu()">Plati 0,46 &euro;</button>
-      <button class="gumb tamni" onclick="platiNaknadu()">Skini s mog računa (saldo 4,08 &euro;)</button>
-    </div>
-    <div class="malitekst" style="margin-top:8px">Na „Moji poslovi" možeš nadoplatiti račun (npr. 5 &euro;) pa se naknada ubuduće skida sama. Ako naručitelj plaća karticom, naknadu plaća on — tebi se ništa ne naplaćuje. Ako posao otpadne bez tvoje krivnje, naknadu vraćamo na tvoj račun.</div>
-  </div>
-
   <div id="ponuda-dobio" class="uspjeh" style="display:none">
-    <b>Naknada plaćena — posao je tvoj za 5 &euro;!</b><br><br>
+    <b>Posao je tvoj za 5 &euro;!</b> S tvog računa skinuta je naknada 0,46 &euro; (novi saldo: 3,62 &euro;).<br><br>
     <b style="color:#1f4e79">Adresa: Trešnjevačka 00, 1. kat &middot; Kontakt: Marija H. (072 xxx xxx)</b> <span class="tko tko-p">vidiš samo ti — posao je tvoj</span><br>
-    <span class="malitekst">Naručiteljica plaća gotovinom na licu mjesta — dobivaš punih 5 &euro;.</span>
+    <span class="malitekst">Naručiteljica plaća gotovinom na licu mjesta — dobivaš punih 5 &euro;. Ako posao otpadne bez tvoje krivnje, 0,46 &euro; se vraća na tvoj račun.</span>
+    <div class="malitekst" style="margin-top:6px">Prazan saldo? <b>Dogovoreni posao uvijek smiješ odraditi</b> — samo se ne možeš javljati na nove oglase dok ne nadoplatiš.</div>
     <button class="gumb tamni" onclick="idi('s4')">Moji poslovi</button>
   </div>
 </section>
@@ -742,12 +748,12 @@
   </div>
   <div class="kartica">
     <h3>Moj račun</h3>
-    <div class="meta">Saldo: <b>4,08 &euro;</b> — s njega se sama skida naknada 0,46 &euro; kad dogovoriš posao (kod gotovinskih poslova; kod kartičnih je plaća naručitelj).</div>
+    <div class="meta">Saldo: <b>3,62 &euro;</b> — s njega se sama skida naknada 0,46 &euro; kad te naručitelj odabere za posao.</div>
     <div class="gumbred" style="margin-top:10px">
       <button class="gumb obrub" style="min-width:140px">Nadoplati 5 &euro;</button>
       <button class="gumb obrub" style="min-width:140px">Nadoplati 10 &euro;</button>
     </div>
-    <div class="malitekst" style="margin-top:6px">Nadoplata nije obavezna — naknadu možeš platiti i svaki put posebno. Nakon trećeg obavljenog posla samo te jednom pitamo želiš li nadoplatu, da ti bude brže.</div>
+    <div class="malitekst" style="margin-top:6px"><b>Prvi posao je besplatan.</b> Od drugog posla treba saldo — najmanja nadoplata 5 &euro; (dosta za 10 poslova), karticom ili KEKS Pay-em, sjedne odmah. Prazan saldo ne ruši dogovoreni posao — samo se ne možeš javljati na nove oglase. Posao otpao bez tvoje krivnje → 0,46 &euro; se vraća.</div>
   </div>
   <div class="kartica">
     <h3>Donijeti drva — danas u 16 h</h3>
@@ -774,7 +780,7 @@
 
   <div class="kartica">
     <h3>Cijena i prijave</h3>
-    Cijena naručitelja <b>piše na oglasu</b>. Pomagači koji žele posao <b>dobrovoljno se jave</b>, a naručitelj od prijavljenih odabere kome vjeruje — tek tada je posao dogovoren. Nema cjenkanja ni nadmetanja. Na svakom oglasu piše i <b>kad je objavljen</b> i <b>do kada posao mora biti obavljen</b>.
+    Cijena naručitelja <b>piše na oglasu</b>. Pomagači koji žele posao <b>dobrovoljno se jave</b>, a naručitelj od prijavljenih odabere kome vjeruje — tek tada je posao dogovoren. Nema cjenkanja ni nadmetanja. Na svakom oglasu piše i <b>kad je objavljen</b> i <b>rok</b>. Rok nije kraj oglasa: posao se može dogovoriti i poslije njega, a oglasi kojima je rok prošao prikazuju se <b>prvi</b>, da ih svi vide. Kad rok prođe, naš tim to vidi i po potrebi se uljudno javi naručitelju. <span class="tko tko-t">prati naš tim</span>
   </div>
 
   <div class="kartica">
@@ -794,12 +800,12 @@
 
   <div class="kartica">
     <h3>Kako se plaća posao?</h3>
-    Na izbor naručitelja: <b>gotovinom</b> izravno pomagaču kad je posao gotov — tada naknadu Priskoči (0,46 &euro;) plaća <b>pomagač</b>, a naručitelj plaća točno dogovorenu cijenu; ili <b>karticom / mobilnim bankarstvom kroz aplikaciju</b> (zgodno kad plaća obitelj iz daljine) — tada naknadu plaća <b>naručitelj</b> (posao od 5 &euro; = 5,46 &euro; + kartična naknada), a novac se skida tek kad potvrdi da je posao obavljen. I pomagač i naručitelj mogu <b>nadoplatiti svoj račun</b> (npr. 5 &euro;) pa se naknada skida sama.
+    Na izbor naručitelja: <b>gotovinom</b> izravno pomagaču kad je posao gotov, ili <b>karticom / mobilnim bankarstvom kroz aplikaciju</b> (zgodno kad plaća obitelj iz daljine) — novac tada ide <b>izravno pomagaču</b> i skida se tek kad naručitelj potvrdi da je posao obavljen. U oba slučaja naručitelj plaća <b>točno dogovorenu cijenu, bez ikakvih dodataka</b>.
   </div>
 
   <div class="kartica">
     <h3>Od čega živi Priskoči?</h3>
-    <b>0,46 &euro; po dogovorenom poslu.</b> Naplaćuje se u trenutku kad naručitelj odobri pomagača: kod gotovine je plaća <b>pomagač</b> (aplikacija mu je zaključana dok je ne plati — ili se sama skine s njegova salda), kod kartice je plaća <b>naručitelj</b> uz cijenu posla. Objava oglasa, gledanje oglasa i prijave su besplatni. Ako dogovoreni posao otpadne bez krivnje platitelja, naknada se vraća na njegov račun.
+    <b>0,46 &euro; po dogovorenom poslu — uvijek plaća pomagač.</b> Skida se s njegova računa u trenutku kad ga naručitelj odabere. <b>Prvi posao je besplatan</b>; od drugog pomagač drži saldo (najmanja nadoplata 5 &euro; = 10 poslova, karticom ili KEKS Pay-em). Prazan saldo ne ruši dogovoreni posao — samo se ne može javljati na nove oglase. Posao otpao bez pomagačeve krivnje → naknada se vraća; ako se pomagač ne pojavi, naknada propada. Objava, gledanje, prijave i povlačenje prijave prije odabira — sve besplatno.
   </div>
 
   <div class="kartica">
@@ -853,7 +859,7 @@
   </div>
   <div class="kartica">
     <h3>5. Naknada</h3>
-    Naknada iznosi 0,46 € po dogovorenom poslu i naplaćuje se u trenutku dogovora. Kod gotovinskog plaćanja plaća je pomagač (do plaćanja mu je korištenje zaključano); kod kartičnog plaćanja plaća je naručitelj, uz naknadu kartičnog procesora. Objava oglasa, razgledavanje i prijave su besplatni. Ako dogovoreni posao otpadne bez krivnje platitelja, naknada se vraća na njegov račun.
+    Naknada iznosi 0,46 € po dogovorenom poslu, plaća je pomagač i skida se s njegova salda u trenutku kad ga naručitelj odabere; prvi posao je oslobođen naknade. Naručitelj uvijek plaća točno dogovorenu cijenu. Objava oglasa, razgledavanje, prijave i povlačenje prijave prije odabira su besplatni. Ako dogovoreni posao otpadne bez krivnje pomagača, naknada se vraća na saldo; ako se pomagač ne pojavi, naknada se ne vraća. Prazan saldo ne utječe na već dogovoreni posao, ali onemogućuje nove prijave.
   </div>
   <div class="kartica">
     <h3>6. Sporovi među korisnicima</h3>
@@ -879,11 +885,8 @@
     return s.slice(-3) === ',00' ? s.slice(0, -3) : s;
   }
   function placanjeTekst(iznos){
-    var kart = Math.round((iznos * 0.015 + 0.25) * 100) / 100;
     if (nacin === 'kartica'){
-      return 'S vaše kartice skinut će se ' + fmt(iznos + 0.46 + kart) + ' € (' + fmt(iznos) +
-             ' € Ivanu + 0,46 € naknada Priskoči + ' + fmt(kart) +
-             ' € naknada za kartično plaćanje) tek kad potvrdite da je posao obavljen.';
+      return 'S vaše kartice skinut će se točno ' + fmt(iznos) + ' € — izravno Ivanu, tek kad potvrdite da je posao obavljen. Naknadu Priskoči (0,46 €) plaća Ivan.';
     }
     return 'Platit ćete Ivanu ' + fmt(iznos) + ' € gotovinom kad posao bude gotov. Naknadu Priskoči (0,46 €) plaća Ivan — vama se ništa ne dodaje.';
   }
@@ -998,11 +1001,6 @@
     window.scrollTo(0, document.body.scrollHeight);
   }
   function demoOdobren(){
-    document.getElementById('naplata').style.display = 'block';
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-  function platiNaknadu(){
-    document.getElementById('naplata').style.display = 'none';
     document.getElementById('ponuda-dobio').style.display = 'block';
     window.scrollTo(0, document.body.scrollHeight);
   }
